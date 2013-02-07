@@ -142,6 +142,19 @@ validator.Settings.ZipValidation.Message = "My message here";
 
 ###  Regular Expressions
 
+Finally, and perhaps most powerful, the validation expressions can be modified for any data type that utilizes a regular expression. This allows for fine-tuning of validation logic for your own needs.
+
+Regular Expressions are not supported in the `RequiredFieldValidation` or `NumericEntryValidation` types.
+
+The following regular expression types may be customized:
+
+| Setting | Default Regex | Example |
+| --- | --- | --- |
+| EmailValidation.Regex | `[a-zA-Z0-9_\\-\\.]+@[a-zA-Z0-9_\\-\\.]+\\.[a-zA-Z]{2,5}` | `BasilValidator.Settings.PhoneValidation.Message = "My message here";` |
+| PhoneValidation.Regex | `\\(\\d{3}\\)\\s\\d{3}-\\d{4}$` | `BasilValidator.Settings.EmailValidation.Message = "My message here";` |
+| SocialSecurityNumberValidation.Regex | `^\\d{3}\\-?\\d{2}\\-?\\d{4}$` | `BasilValidator.Settings.NumericEntryValidation.Message = "My message here";` |
+|ZipValidation.Regex | Input field is empty | `BasilValidator.Settings.RequiredFieldValidation.Message = "My message here";` |
+
 ## Supported .NET controls
 
 Basil supports the following .NET components:
