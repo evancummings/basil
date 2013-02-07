@@ -68,6 +68,32 @@ Two lines to make the magic happen:
 
 A boolean value is produced from this call, which you can then incorporate into your own logic flow within your applicaion.
 
+## Bootstrap tooltip integration
+
+Validation error messages are stored in the title attribute of the HTML element. Several popular tooltip libraries, including Twitter Bootstrap, utilize the title attribute as the textual source of hover effect tooltips. This allows for drop-in support for any tooltip library following this method. For example, and demonstrated above, adding the rel="tooltip" will tell Bootstrap to automatically interpet the tagged element as a tooltip.
+
+## Customization
+
+## Supported .NET controls
+
+Basil supports the following .NET components:
+
+* Textbox
+* Checkbox
+* DropDownList
+* RadioButtonList
+
+## Supported data-* attributes
+
+Basil supports the following data-* attributes:
+
+* data-required (true|false)
+    *  Instructs the validator whether to enforce non-empty user input
+*  data-type (phone|zip|email|ssn|number)
+    * Insructs the validator to apply additional logic based on the data type of the field
+    * Custom regular expressions may be supplied for phone, zup, email, and SSN types, see 'Cusomization' for more details
+
+
 
 
 
