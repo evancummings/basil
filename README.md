@@ -77,13 +77,22 @@ Validation error messages are stored in the title attribute of the HTML element.
 Basil supports various configuration options for the validator output. All configuration options are housed within the `Settings` property within the `BasilValidator` object. All values come with a 'I thought this best' at the time default, which can be overriden as needed.
 
 ### Color
-Basil operates under two states - a control is either valid or invalid. Each state has the following configurable colors associated with them
-* `ForeColor`
-    * Corresponds to the Text Color of the input control
-* `BackColor`
-    * Corresponds to the Back Color of the input control
-* `BorderColor`
-    * Corresponds to the Border Color of the input control
+Basil operates under two states - a control is either valid or invalid.
+
+The following controls may be modified individually:
+
+* `BasilValidator.Settings.Textbox`
+* `BasilValidator.Settings.DropDownList`
+* `BasilValidator.Settings.RadioButtonList`
+* `BasilValidator.Settings.Checkbox`
+
+Each of the preceeding controls may have the following attributes modified:
+
+| Property | Description |
+| --- | --- |
+| `ForeColor` | Corresponds to the Text Color of the input control |
+| `BackColor` | Corresponds to the Back Color of the input control |
+| `BorderColor` | Corresponds to the Border Color of the input control |
 
 Fore, Back, and Border colors are not necessarily implemented on each .NET control - basil will apply styling that is appropriate to the control in context.
 
@@ -111,12 +120,25 @@ The following customizations are available:
 
 | Setting | Description | Example |
 | --- | --- | --- |
-| PhoneValidation | Phone number fails validation | `validator.Settings.PhoneValidation.Message = "My message here";` |
-| EmailValidation | Email fails validation | validator.Settings.EmailValidation.Message = "My message here"; |
-| NumericEntryValidation | Input is not numeric | validator.Settings.NumericEntryValidation.Message = "My message here"; |
-|RequiredFieldValidation | Input field is empty | validator.Settings.RequiredFieldValidation.Message = "My message here"; |
-| SocialSecurityNumberValidation| Input field is not a properly formatted SSN | validator.Settings.SocialSecurityNumberValidation.Message = "My message here"; |
-|ZipValidation | ZIP code is improperly formatted | validator.Settings.ZipValidation.Message = "My message here"; |
+| PhoneValidation.Message | Phone number fails validation | `BasilValidator.Settings.PhoneValidation.Message = "My message here";` |
+| EmailValidation.Message | Email fails validation | `BasilValidator.Settings.EmailValidation.Message = "My message here";` |
+| NumericEntryValidation.Message | Input is not numeric | `BasilValidator.Settings.NumericEntryValidation.Message = "My message here";` |
+|RequiredFieldValidation.Message | Input field is empty | `BasilValidator.Settings.RequiredFieldValidation.Message = "My message here";` |
+| SocialSecurityNumberValidation.Message | Input field is not a properly formatted SSN | `BasilValidator.Settings.SocialSecurityNumberValidation.Message = "My message here";` |
+|ZipValidation.Message | ZIP code is improperly formatted | `BasilValidator.Settings.ZipValidation.Message = "My message here";` |
+
+Code example:
+
+``` csharp
+Basil.BasilValidator validator = new Basil.BasilValidator();
+
+validator.Settings.PhoneValidation.Message = "My message here";
+validator.Settings.EmailValidation.Message = "My message here";
+validator.Settings.NumericEntryValidation.Message = "My message here";
+validator.Settings.RequiredFieldValidation.Message = "My message here";
+validator.Settings.SocialSecurityNumberValidation.Message = "My message here";
+validator.Settings.ZipValidation.Message = "My message here";
+```
 
 ###  Regular Expressions
 
