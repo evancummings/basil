@@ -150,11 +150,21 @@ The following regular expression types may be customized:
 
 | Setting | Default Regex | Example |
 | --- | --- | --- |
-| EmailValidation.Regex | `[a-zA-Z0-9_\\-\\.]+@[a-zA-Z0-9_\\-\\.]+\\.[a-zA-Z]{2,5}` | `BasilValidator.Settings.PhoneValidation.Message = "My message here";` |
-| PhoneValidation.Regex | `\\(\\d{3}\\)\\s\\d{3}-\\d{4}$` | `BasilValidator.Settings.EmailValidation.Message = "My message here";` |
-| SocialSecurityNumberValidation.Regex | `^\\d{3}\\-?\\d{2}\\-?\\d{4}$` | `BasilValidator.Settings.NumericEntryValidation.Message = "My message here";` |
-|ZipValidation.Regex | Input field is empty | `BasilValidator.Settings.RequiredFieldValidation.Message = "My message here";` |
+| EmailValidation.Regex | `[a-zA-Z0-9_\\-\\.]+@[a-zA-Z0-9_\\-\\.]+\\.[a-zA-Z]{2,5}` | `BaseValidator.Settings.EmailValidation.Regex = "My regex here";` |
+| PhoneValidation.Regex | `\\(\\d{3}\\)\\s\\d{3}-\\d{4}$` | `BaseValidator.Settings.PhoneValidation.Regex = "My regex here";` |
+| SocialSecurityNumberValidation.Regex | `^\\d{3}\\-?\\d{2}\\-?\\d{4}$` | `BaseValidator.Settings.SocialSecurityNumberValidation.Regex = "My regex here";` |
+|ZipValidation.Regex | Input field is empty | `BaseValidator.Settings.ZipValidation.Regex = "My regex here";` |
 
+Example code:
+
+``` csharp
+Basil.BasilValidator validator = new Basil.BasilValidator();
+
+validator.Settings.PhoneValidation.Regex = "My regex here";
+validator.Settings.EmailValidation.Regex = "My regex here";            
+validator.Settings.SocialSecurityNumberValidation.Regex = "My regex here";
+validator.Settings.ZipValidation.Regex = "My regex here";
+```
 ## Supported .NET controls
 
 Basil supports the following .NET components:
