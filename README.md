@@ -18,8 +18,8 @@ Basil is designed to validate large amounts of form fields en mass with no depen
 
 The functionality of basil relies on two conditions on the front-end ASPX markup:
 
-1. The fields to be validated are wrapped in a Panel control
-2. The individual input elements are decorated with a data-required="true|false" tag and/or a data-type tag (more on this to come).
+1. The fields to be validated are wrapped in a `Panel` control
+2. The individual input elements are decorated with a `data-required="true|false"` tag and/or a `data-type` tag (more on this to come).
 
 Let's consider this markup
 
@@ -45,11 +45,11 @@ Let's consider this markup
 
 Points to note:
 
-1. The fields to be validated are wrapped in a Panel named myForm
-2. The Textbox txtName has a data-required="true" to force user input
-3. The Textbox txtEmail has both a data-required="true" and a data-type="email", forcing user input as well as enforcing proper email formatting
+1. The fields to be validated are wrapped in a `Panel` named `myForm`
+2. The `Textbox` `txtName` has a `data-required="true"` to force user input
+3. The `Textbox` `txtEmail` has both a `data-required="true"` and a `data-type="email"`, forcing user input as well as enforcing proper email formatting
 
-That's all there is to the front-end, let's now look at how this works when btnSubmit is clicked.
+That's all there is to the front-end, let's now look at how this works when `btnSubmit` is clicked.
 
 The server-side click event is as follows:
 
@@ -63,33 +63,35 @@ protected void btnSubmit_Click(object sender, EventArgs e)
 
 Two lines to make the magic happen:
 
-1. We instantiate a new instance of the BasilValidator class, and
-2. We call the Validate method, providing the Panel containing the input elements to validate
+1. We instantiate a new instance of the `BasilValidator` class, and
+2. We call the `Validate` method, providing the `Panel` containing the input elements to validate
 
 A boolean value is produced from this call, which you can then incorporate into your own logic flow within your applicaion.
 
 ## Bootstrap tooltip integration
 
-Validation error messages are stored in the title attribute of the HTML element. Several popular tooltip libraries, including Twitter Bootstrap, utilize the title attribute as the textual source of hover effect tooltips. This allows for drop-in support for any tooltip library following this method. For example, and demonstrated above, adding the rel="tooltip" will tell Bootstrap to automatically interpet the tagged element as a tooltip.
+Validation error messages are stored in the title attribute of the HTML element. Several popular tooltip libraries, including Twitter Bootstrap, utilize the title attribute as the textual source of hover effect tooltips. This allows for drop-in support for any tooltip library following this method. For example, and demonstrated above, adding the `rel="tooltip"` will tell Bootstrap to automatically interpet the tagged element as a tooltip.
 
 ## Customization
+
+Basil supports various configuration options for the validator output
 
 ## Supported .NET controls
 
 Basil supports the following .NET components:
 
-* Textbox
-* Checkbox
-* DropDownList
-* RadioButtonList
+* `Textbox`
+* `Checkbox`
+* `DropDownList`
+* `RadioButtonList`
 
 ## Supported data-* attributes
 
 Basil supports the following data-* attributes:
 
-* data-required (true|false)
+* `data-required (true|false)`
     *  Instructs the validator whether to enforce non-empty user input
-*  data-type (phone|zip|email|ssn|number)
+*  `data-type (phone|zip|email|ssn|number)`
     * Insructs the validator to apply additional logic based on the data type of the field
     * Custom regular expressions may be supplied for phone, zup, email, and SSN types, see 'Cusomization' for more details
 
