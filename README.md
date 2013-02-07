@@ -111,7 +111,12 @@ The following customizations are available:
 
 | Setting | Description | Example |
 | --- | --- | --- |
-| PhoneValidation | The message that appears when a phone number validation fails | `validator.Settings.PhoneValidation.Message = "My message here";` |
+| PhoneValidation | Phone number fails validation | `validator.Settings.PhoneValidation.Message = "My message here";` |
+| EmailValidation | Email fails validation | validator.Settings.EmailValidation.Message = "My message here"; |
+| NumericEntryValidation | Input is not numeric | validator.Settings.NumericEntryValidation.Message = "My message here"; |
+|RequiredFieldValidation | Input field is empty | validator.Settings.RequiredFieldValidation.Message = "My message here"; |
+| SocialSecurityNumberValidation| Input field is not a properly formatted SSN | validator.Settings.SocialSecurityNumberValidation.Message = "My message here"; |
+|ZipValidation | ZIP code is improperly formatted | validator.Settings.ZipValidation.Message = "My message here"; |
 
 ###  Regular Expressions
 
