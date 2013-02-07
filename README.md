@@ -74,7 +74,46 @@ Validation error messages are stored in the title attribute of the HTML element.
 
 ## Customization
 
-Basil supports various configuration options for the validator output
+Basil supports various configuration options for the validator output. All configuration options are housed within the `Settings` property within the `BasilValidator` object. All values come with a 'I thought this best' at the time default, which can be overriden as needed.
+
+### Color
+Basil operates under two states - a control is either valid or invalid. Each state has the following configurable colors associated with them
+* `ForeColor`
+    * Corresponds to the Text Color of the input control
+* `BackColor`
+    * Corresponds to the Back Color of the input control
+* `BorderColor`
+    * Corresponds to the Border Color of the input control
+
+Fore, Back, and Border colors are not necessarily implemented on each .NET control - basil will apply styling that is appropriate to the control in context.
+
+The color is an HTML style hex color, and should be preceeded with the pound symbol.
+
+Below is an example of configuring a Textbox's styling:
+
+``` csharp
+Basil.BasilValidator validator = new Basil.BasilValidator();
+
+validator.Settings.Textbox.InvalidColors.BackColor = "#000000";
+validator.Settings.Textbox.InvalidColors.ForeColor = "#FFFFFF";
+validator.Settings.Textbox.InvalidColors.BorderColor = "#333333";
+
+validator.Settings.Textbox.ValidColors.BackColor = "#FFFFFF";
+validator.Settings.Textbox.ValidColors.ForeColor = "#000000";
+validator.Settings.Textbox.ValidColors.BorderColor = "#0F0F0F";
+```
+
+### Error Messages
+
+The error message that is applied to the element via the `title` tag is also fully configurable.
+
+The following customizations are available:
+
+| Setting | Description | Example |
+| --- | --- | --- |
+| PhoneValidation | The message that appears when a phone number validation fails | `validator.Settings.PhoneValidation.Message = "My message here";` |
+
+###  Regular Expressions
 
 ## Supported .NET controls
 
