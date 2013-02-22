@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Basil.Validators
+﻿namespace Basil.Validators
 {
     public class BasilZipValidator : BasilValidation
     {
@@ -16,5 +11,4 @@ namespace Basil.Validators
             this.Regex = DEFAULT_REGEX;
         }
     }
-
 }
