@@ -1,10 +1,9 @@
-﻿using Basil.Settings;
+﻿using Basil.Helpers;
+using Basil.Settings;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Net.Mail;
 using System.Text.RegularExpressions;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -12,335 +11,247 @@ namespace Basil
 {
     public class BasilValidator
     {
-        #region Instance Variables
-
-        private BasilSettings _settings;
-
-
-        #endregion
-
         #region Enumerations
 
-        enum ControlState
+        private enum ControlState
         {
             Valid = 1,
             Invalid = 2
         }
 
-        #endregion
+        #endregion Enumerations
 
         #region Properties
 
-        public BasilSettings Settings { get { return _settings; } set { _settings = value; } }
+        public BasilSettings Settings { get; set; }
 
+        public bool IsValid { get; set; }
 
-        #endregion
+        public bool AddRelEqualsTooltip { get; set; }
+
+        #endregion Properties
 
         #region Control States
-        private void SetControlState(CheckBox txt, ControlState state)
-        {
-            txt.Attributes["title"] = string.Empty;
-            switch (state)
-            {
-                case ControlState.Valid:
-                    txt.BackColor = System.Drawing.ColorTranslator.FromHtml(_settings.Checkbox.ValidColors.BackColor);
-                    txt.ForeColor = System.Drawing.ColorTranslator.FromHtml(_settings.Checkbox.ValidColors.ForeColor);
-                    return;
-                case ControlState.Invalid:
-                    txt.BackColor = System.Drawing.ColorTranslator.FromHtml(_settings.Checkbox.InvalidColors.BackColor);
-                    txt.ForeColor = System.Drawing.ColorTranslator.FromHtml(_settings.Checkbox.InvalidColors.ForeColor);
-                    return;
-            }
-        }
 
-        private void SetControlState(RadioButtonList txt, ControlState state)
+        private void SetControlState(WebControl control, ControlState state, string message = "")
         {
-            txt.Attributes["title"] = string.Empty;
-            switch (state)
-            {
-                case ControlState.Valid:
-                    txt.BackColor = System.Drawing.ColorTranslator.FromHtml(_settings.RadioButtonList.ValidColors.BackColor);
-                    txt.ForeColor = System.Drawing.ColorTranslator.FromHtml(_settings.RadioButtonList.ValidColors.ForeColor);
-                    return;
-                case ControlState.Invalid:
-                    txt.BackColor = System.Drawing.ColorTranslator.FromHtml(_settings.RadioButtonList.InvalidColors.BackColor);
-                    txt.ForeColor = System.Drawing.ColorTranslator.FromHtml(_settings.RadioButtonList.InvalidColors.ForeColor);
-                    return;
-            }
-        }
+            var backColorValid = "";
+            var borderColorValid = "";
+            var backColorInValid = "";
+            var borderColorInValid = "";
 
-        private void SetControlState(DropDownList txt, ControlState state, string message)
-        {
-            //txt.Attributes("title") = message
-            txt.ToolTip = message;
-            switch (state)
+            if (control is TextBox)
             {
-                case ControlState.Valid:
-                    txt.BackColor = System.Drawing.ColorTranslator.FromHtml(_settings.DropDownList.ValidColors.BackColor);
-                    txt.BorderColor = System.Drawing.ColorTranslator.FromHtml(_settings.DropDownList.ValidColors.BorderColor);
-                    return;
-                case ControlState.Invalid:
-                    txt.BackColor = System.Drawing.ColorTranslator.FromHtml(_settings.DropDownList.InvalidColors.BackColor);
-                    txt.BorderColor = System.Drawing.ColorTranslator.FromHtml(_settings.DropDownList.InvalidColors.BorderColor);
-                    return;
+                backColorValid = Settings.Textbox.ValidColors.BackColor;
+                borderColorValid = Settings.Textbox.ValidColors.BorderColor;
+                backColorInValid = Settings.Textbox.InvalidColors.BackColor;
+                borderColorInValid = Settings.Textbox.InvalidColors.BorderColor;
             }
-        }
-
-        private void SetControlState(TextBox txt, ControlState state)
-        {
-            txt.Attributes["title"] = string.Empty;
-            switch (state)
+            else if (control is CheckBox)
             {
-                case ControlState.Valid:
-                    txt.BackColor = System.Drawing.ColorTranslator.FromHtml(_settings.Textbox.ValidColors.BackColor);
-                    txt.BorderColor = System.Drawing.ColorTranslator.FromHtml(_settings.Textbox.ValidColors.BorderColor);
-                    return;
-                case ControlState.Invalid:
-                    txt.BackColor = System.Drawing.ColorTranslator.FromHtml(_settings.Textbox.InvalidColors.BackColor);
-                    txt.BorderColor = System.Drawing.ColorTranslator.FromHtml(_settings.Textbox.InvalidColors.BorderColor);
-                    return;
+                backColorValid = Settings.Checkbox.ValidColors.BackColor;
+                borderColorValid = Settings.Checkbox.ValidColors.BorderColor;
+                backColorInValid = Settings.Checkbox.InvalidColors.BackColor;
+                borderColorInValid = Settings.Checkbox.InvalidColors.BorderColor;
             }
-        }
+            else if (control is RadioButtonList)
+            {
+                backColorValid = Settings.RadioButtonList.ValidColors.BackColor;
+                borderColorValid = Settings.RadioButtonList.ValidColors.BorderColor;
+                backColorInValid = Settings.RadioButtonList.InvalidColors.BackColor;
+                borderColorInValid = Settings.RadioButtonList.InvalidColors.BorderColor;
+            }
+            else if (control is DropDownList)
+            {
+                backColorValid = Settings.DropDownList.ValidColors.BackColor;
+                borderColorValid = Settings.DropDownList.ValidColors.BorderColor;
+                backColorInValid = Settings.DropDownList.InvalidColors.BackColor;
+                borderColorInValid = Settings.DropDownList.InvalidColors.BorderColor;
+            }
 
-        private void SetControlState(TextBox txt, ControlState state, string message)
-        {
-            txt.Attributes["title"] = message;
+            control.ToolTip = message;
 
             switch (state)
             {
                 case ControlState.Valid:
-                    txt.BackColor = System.Drawing.ColorTranslator.FromHtml(_settings.Textbox.ValidColors.BackColor);
-                    txt.BorderColor = System.Drawing.ColorTranslator.FromHtml(_settings.Textbox.ValidColors.BorderColor);
+                    control.BackColor = System.Drawing.ColorTranslator.FromHtml(backColorValid);
+                    control.BorderColor = System.Drawing.ColorTranslator.FromHtml(borderColorValid);
+
                     return;
+
                 case ControlState.Invalid:
-                    txt.BackColor = System.Drawing.ColorTranslator.FromHtml(_settings.Textbox.InvalidColors.BackColor);
-                    txt.BorderColor = System.Drawing.ColorTranslator.FromHtml(_settings.Textbox.InvalidColors.BorderColor);
+                    control.BackColor = System.Drawing.ColorTranslator.FromHtml(backColorInValid);
+                    control.BorderColor = System.Drawing.ColorTranslator.FromHtml(borderColorInValid);
+
+                    if (AddRelEqualsTooltip)
+                    {
+                        control.Attributes["rel"] = "tooltip";
+                    }
+
+                    // If we find an invalid rule set the validation to return false
+                    IsValid = false;
+
                     return;
             }
         }
-        #endregion
+
+        #endregion Control States
 
         #region Type Validators
-        private bool IsNumeric(string num)
+
+        private static bool IsNumeric(string num)
         {
             double myNum = 0;
 
             return Double.TryParse(num, out myNum);
-
         }
 
-        private bool IsValidZipCode(string str_zip_code)
+        private static bool IsValidZipCode(string zip)
         {
-            return IsNumeric(str_zip_code);
+            return IsNumeric(zip);
         }
 
-        private bool IsValidPhoneNumber(string str_phone_no)
+        private bool IsValidPhoneNumber(string phone)
         {
-            Regex matchRegex = new Regex(_settings.PhoneValidation.Regex);
-            MatchCollection matches = matchRegex.Matches(str_phone_no);
-            if (matches.Count == 0)
+            var matchRegex = new Regex(Settings.PhoneValidation.Regex, RegexOptions.IgnorePatternWhitespace);
+            var matches = matchRegex.Matches(phone);
+
+            return matches.Count != 0;
+        }
+
+        private static bool IsValidEmailAddress(string email)
+        {
+            //var matchRegex = new Regex(Settings.EmailValidation.Regex);
+            //var matches = matchRegex.Matches(email);
+
+            //return matches.Count != 0;
+
+            try
             {
-                return false;
-            }
-            else
-            {
+                // This will throw an exception if an invalid email address is passed
+                new MailAddress(email);
+
                 return true;
             }
-        }
+            catch
+            {
+            }
 
-        private bool IsValidEmailAddress(string email_id)
-        {
-            Regex matchRegex = new Regex(_settings.EmailValidation.Regex);
-            MatchCollection matches = matchRegex.Matches(email_id);
-            if (matches.Count == 0)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return false;
         }
 
         private bool IsValidSSN(string ssn)
         {
             //Return (ssn Like "###-##-####") Or (ssn Like "#########")
-            Regex matchregex = new Regex(_settings.SocialSecurityNumberValidation.Regex);
-            MatchCollection matches = matchregex.Matches(ssn);
-            if (matches.Count == 0)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            var matchregex = new Regex(Settings.SocialSecurityNumberValidation.Regex);
+            var matches = matchregex.Matches(ssn);
+
+            return matches.Count != 0;
         }
 
-        private bool IsValidNumber(string num)
+        private static bool IsValidNumber(string num)
         {
             return IsNumeric(num);
         }
 
-        #endregion
-
-        public BasilValidator()
+        private static bool IsValidDate(string text)
         {
-            _settings = new BasilSettings();
+            DateTime temp;
+
+            return DateTime.TryParse(text, out temp);
         }
 
+        #endregion Type Validators
 
-        public bool Validate(Panel pnl)
+        public BasilValidator(bool addRelEqualsTooltip = false)
         {
-            bool isWizardValid = true;
-            foreach (Control ctl in pnl.Controls)
+            Settings = new BasilSettings();
+
+            AddRelEqualsTooltip = addRelEqualsTooltip;
+        }
+
+        public bool Validate(Control control)
+        {
+            // Default to valid
+            IsValid = true;
+
+            // Get the list of controls we want to validate
+            var cbControls = ControlHelper.GetControlsOfType<CheckBox>(control).Where(x => x.Attributes["data-required"] != null).ToList();
+            var rblControls = ControlHelper.GetControlsOfType<RadioButtonList>(control).Where(x => x.Attributes["data-required"] != null).ToList();
+            var ddlControls = ControlHelper.GetControlsOfType<DropDownList>(control).Where(x => x.Attributes["data-required"] != null).ToList();
+            var tbControls = ControlHelper.GetControlsOfType<TextBox>(control).Where(x => x.Attributes["data-required"] != null || x.Attributes["data-type"] != null).ToList();
+
+            // Validate checkboxes
+            foreach (var cbControl in cbControls.Where(x => x.Attributes["data-required"].Equals("true", StringComparison.OrdinalIgnoreCase)))
             {
-                bool isComponentValid = true;
-                if ((ctl) is CheckBox)
+                SetControlState(cbControl, cbControl.Checked ? ControlState.Valid : ControlState.Invalid);
+            }
+
+            // Validate radiobuttons
+            foreach (var rblControl in rblControls.Where(x => x.Attributes["data-required"].Equals("true", StringComparison.OrdinalIgnoreCase)))
+            {
+                SetControlState(rblControl, rblControl.SelectedIndex >= 0 ? ControlState.Valid : ControlState.Invalid);
+            }
+
+            // Validate drop downs
+            foreach (var ddlControl in ddlControls.Where(x => x.Attributes["data-required"].Equals("true", StringComparison.OrdinalIgnoreCase)))
+            {
+                if (string.IsNullOrWhiteSpace(ddlControl.Text)) SetControlState(ddlControl, ControlState.Invalid, Settings.RequiredFieldValidation.Message);
+                else SetControlState(ddlControl, ControlState.Valid, string.Empty);
+            }
+
+            // Validate textboxes
+            foreach (var tbControl in tbControls)
+            {
+                var dataRequired = tbControl.Attributes["data-required"];
+                var dataType = tbControl.Attributes["data-type"];
+
+                if (dataRequired != null && dataRequired.Equals("true", StringComparison.OrdinalIgnoreCase))
                 {
-                    CheckBox tempCtl = (CheckBox)ctl;
-                    if (tempCtl.Attributes["data-required"] == "true" & isComponentValid)
-                    {
-                        if (tempCtl.Checked == true)
-                        {
-                            SetControlState(tempCtl, ControlState.Valid);
-                        }
-                        else
-                        {
-                            SetControlState(tempCtl, ControlState.Invalid);
-                            isWizardValid = false;
-                            isComponentValid = false;
-                        }
-                    }
+                    if (string.IsNullOrWhiteSpace(tbControl.Text)) SetControlState(tbControl, ControlState.Invalid, Settings.RequiredFieldValidation.Message);
+                    else SetControlState(tbControl, ControlState.Valid);
                 }
-                if ((ctl) is RadioButtonList)
+
+                if (dataType == null) continue;
+
+                if (dataType.Equals("zip", StringComparison.OrdinalIgnoreCase))
                 {
-                    RadioButtonList tempCtl = (RadioButtonList)ctl;
-                    if (tempCtl.Attributes["data-required"] == "true" & isComponentValid)
-                    {
-                        if (tempCtl.SelectedIndex >= 0)
-                        {
-                            SetControlState(tempCtl, ControlState.Valid);
-                        }
-                        else
-                        {
-                            SetControlState(tempCtl, ControlState.Invalid);
-                            isWizardValid = false;
-                            isComponentValid = false;
-                        }
-                    }
+                    if (IsValidZipCode(tbControl.Text)) SetControlState(tbControl, ControlState.Valid);
+                    else SetControlState(tbControl, ControlState.Invalid, Settings.ZipValidation.Message);
                 }
-                if ((ctl) is DropDownList)
-                {
-                    DropDownList tempCtl = (DropDownList)ctl;
 
-                    if (tempCtl.Attributes["data-required"] == "true" & isComponentValid)
-                    {
-                        if (string.IsNullOrWhiteSpace(tempCtl.Text))
-                        {
-                            SetControlState(tempCtl, ControlState.Invalid, _settings.RequiredFieldValidation.Message);
-                            isWizardValid = false;
-                            isComponentValid = false;
-                        }
-                        else
-                        {
-                            SetControlState(tempCtl, ControlState.Valid, string.Empty);
-                        }
-                    }
+                if (dataType.Equals("phone", StringComparison.OrdinalIgnoreCase))
+                {
+                    if (IsValidPhoneNumber(tbControl.Text)) SetControlState(tbControl, ControlState.Valid);
+                    else SetControlState(tbControl, ControlState.Invalid, Settings.PhoneValidation.Message);
                 }
-                if ((ctl) is TextBox)
+
+                if (dataType.Equals("email", StringComparison.OrdinalIgnoreCase))
                 {
-                    TextBox tempCtl = (TextBox)ctl;
+                    if (IsValidEmailAddress(tbControl.Text)) SetControlState(tbControl, ControlState.Valid);
+                    else SetControlState(tbControl, ControlState.Invalid, Settings.EmailValidation.Message);
+                }
 
-                    if (tempCtl.Attributes["data-required"] == "true" & isComponentValid)
-                    {
-                        if (string.IsNullOrWhiteSpace(tempCtl.Text))
-                        {
-                            SetControlState(tempCtl, ControlState.Invalid, _settings.RequiredFieldValidation.Message);
-                            isWizardValid = false;
-                            isComponentValid = false;
-                        }
-                        else
-                        {
-                            SetControlState(tempCtl, ControlState.Valid);
-                        }
-                    }
+                if (dataType.Equals("ssn", StringComparison.OrdinalIgnoreCase))
+                {
+                    if (IsValidSSN(tbControl.Text)) SetControlState(tbControl, ControlState.Valid);
+                    else SetControlState(tbControl, ControlState.Invalid, Settings.SocialSecurityNumberValidation.Message);
+                }
 
-                    if (tempCtl.Attributes["data-type"] == "zip" & isComponentValid)
-                    {
-                        if (IsValidZipCode(tempCtl.Text))
-                        {
-                            SetControlState(tempCtl, ControlState.Valid);
-                        }
-                        else
-                        {
-                            SetControlState(tempCtl, ControlState.Invalid, _settings.ZipValidation.Message);
-                            isWizardValid = false;
-                            isComponentValid = false;
-                        }
-                    }
+                if (dataType.Equals("number", StringComparison.OrdinalIgnoreCase))
+                {
+                    if (IsValidNumber(tbControl.Text)) SetControlState(tbControl, ControlState.Valid);
+                    else SetControlState(tbControl, ControlState.Invalid, Settings.NumericEntryValidation.Message);
+                }
 
-                    if (tempCtl.Attributes["data-type"] == "phone" & isComponentValid)
-                    {
-                        if (IsValidPhoneNumber(tempCtl.Text))
-                        {
-                            SetControlState(tempCtl, ControlState.Valid);
-                        }
-                        else
-                        {
-                            SetControlState(tempCtl, ControlState.Invalid, _settings.PhoneValidation.Message);
-                            isWizardValid = false;
-                            isComponentValid = false;
-                        }
-                    }
-
-                    if (tempCtl.Attributes["data-type"] == "email" & isComponentValid)
-                    {
-                        if (IsValidEmailAddress(tempCtl.Text))
-                        {
-                            SetControlState(tempCtl, ControlState.Valid);
-                        }
-                        else
-                        {
-                            SetControlState(tempCtl, ControlState.Invalid, _settings.EmailValidation.Message);
-                            isWizardValid = false;
-                            isComponentValid = false;
-                        }
-                    }
-
-                    if (tempCtl.Attributes["data-type"] == "ssn" & isComponentValid)
-                    {
-                        if (IsValidSSN(tempCtl.Text))
-                        {
-                            SetControlState(tempCtl, ControlState.Valid);
-                        }
-                        else
-                        {
-                            SetControlState(tempCtl, ControlState.Invalid, _settings.SocialSecurityNumberValidation.Message);
-                            isWizardValid = false;
-                            isComponentValid = false;
-                        }
-                    }
-
-                    if (tempCtl.Attributes["data-type"] == "number" & isComponentValid)
-                    {
-                        if (IsValidNumber(tempCtl.Text))
-                        {
-                            SetControlState(tempCtl, ControlState.Valid);
-                        }
-                        else
-                        {
-                            SetControlState(tempCtl, ControlState.Invalid, _settings.NumericEntryValidation.Message);
-                            isWizardValid = false;
-                            isComponentValid = false;
-                        }
-                    }
+                if (dataType.Equals("date", StringComparison.OrdinalIgnoreCase))
+                {
+                    if (IsValidDate(tbControl.Text)) SetControlState(tbControl, ControlState.Valid);
+                    else SetControlState(tbControl, ControlState.Invalid, Settings.DateValidation.Message);
                 }
             }
 
-            return isWizardValid;
+            return IsValid;
         }
-
-
     }
 }

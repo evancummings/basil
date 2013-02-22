@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-
-namespace Basil.Colors
+﻿namespace Basil.Colors
 {
     public class BasilColorSet
     {
@@ -24,36 +18,30 @@ namespace Basil.Colors
             Invalid = 2
         }
 
-        #endregion
+        #endregion Enumerations
 
+        public string ForeColor { get; set; }
 
-        private string _foreColor;
-        public string ForeColor { get { return _foreColor; } set { _foreColor = value; } }
+        public string BackColor { get; set; }
 
-        private string _backColor;
-        public string BackColor { get { return _backColor; } set { _backColor = value; } }
-
-        private string _borderColor;
-        public string BorderColor { get { return _borderColor; } set { _borderColor = value; } }
+        public string BorderColor { get; set; }
 
         public BasilColorSet(ColorState state)
         {
             switch (state)
             {
                 case ColorState.Valid:
-                    _foreColor = DEFAULT_VALID_FORE_COLOR;
-                    _backColor = DEFAULT_VALID_BACK_COLOR;
-                    _borderColor = DEFAULT_VALID_BORDER_COLOR;
+                    ForeColor = DEFAULT_VALID_FORE_COLOR;
+                    BackColor = DEFAULT_VALID_BACK_COLOR;
+                    BorderColor = DEFAULT_VALID_BORDER_COLOR;
                     return;
 
                 case ColorState.Invalid:
-                    _foreColor = DEFAULT_INVALID_FORE_COLOR;
-                    _backColor = DEFAULT_INVALID_BACK_COLOR;
-                    _borderColor = DEFAULT_INVALID_BORDER_COLOR;
+                    ForeColor = DEFAULT_INVALID_FORE_COLOR;
+                    BackColor = DEFAULT_INVALID_BACK_COLOR;
+                    BorderColor = DEFAULT_INVALID_BORDER_COLOR;
                     return;
-
             }
         }
-
     }
 }
