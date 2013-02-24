@@ -21,14 +21,15 @@
     <ApiFilter />
     <ComponentConfigurations />
     <DocumentationSources>
-      <DocumentationSource sourceFile="..\Basil\bin\Debug\Basil.XML" />
-      <DocumentationSource sourceFile="..\Basil\bin\Debug\Basil.dll" />
+      <DocumentationSource sourceFile="..\Basil.Core\bin\Debug\Basil.XML" />
+      <DocumentationSource sourceFile="..\Basil.Core\bin\Debug\Basil.dll" />
     </DocumentationSources>
     <HelpAttributes />
     <NamespaceSummaries>
       <NamespaceSummaryItem name="Basil" isDocumented="True">Test</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Basil.Colors" isDocumented="True">Test 1</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Basil.Controls" isDocumented="True">Test 2</NamespaceSummaryItem></NamespaceSummaries>
+      <NamespaceSummaryItem name="Basil.Colors" isDocumented="True">Test 1</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Basil.Controls" isDocumented="True">Test 2</NamespaceSummaryItem>
+    </NamespaceSummaries>
     <PlugInConfigurations />
     <BuildLogFile />
     <HtmlHelp1xCompilerPath />
