@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{52362A
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "Basil.Documentation", "Basil.Documentation\Basil.Documentation.shfbproj", "{44069A2A-1C86-4F14-BF27-EDBAC9AB655F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +30,10 @@ Global
 		{0A12D70C-032F-494B-8618-2064671AD122}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A12D70C-032F-494B-8618-2064671AD122}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A12D70C-032F-494B-8618-2064671AD122}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44069A2A-1C86-4F14-BF27-EDBAC9AB655F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44069A2A-1C86-4F14-BF27-EDBAC9AB655F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44069A2A-1C86-4F14-BF27-EDBAC9AB655F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44069A2A-1C86-4F14-BF27-EDBAC9AB655F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
