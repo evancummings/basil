@@ -5,13 +5,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basil.Core", "Basil\Basil.Core.csproj", "{0A12D70C-032F-494B-8618-2064671AD122}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{52362A4D-D3F9-4CA1-9C66-77B4DF4DDD79}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
-EndProject
 Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "Basil.Documentation", "Basil.Documentation\Basil.Documentation.shfbproj", "{44069A2A-1C86-4F14-BF27-EDBAC9AB655F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basil.Sample", "Basil.Sample\Basil.Sample.csproj", "{1E00491D-A8AA-4DF9-AA77-B47597F656E4}"
