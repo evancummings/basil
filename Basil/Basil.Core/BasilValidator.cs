@@ -149,8 +149,6 @@ namespace Basil
             if (!brbControls.All(x => x.IsValid)) IsValid = false;
             if (!bddlControls.All(x => x.IsValid)) IsValid = false;
 
-            if (!IsValid) return IsValid;
-
             #endregion Validate Basil Types
 
             #region Validate .NET Types
