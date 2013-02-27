@@ -57,7 +57,9 @@ namespace Basil.WebControls
 
             if (!string.IsNullOrEmpty(Label))
             {
-                writer.AddAttribute(HtmlTextWriterAttribute.Class, "control-label");
+                var labelCssClass = (Required) ? "control-label required" : "control-label";
+
+                writer.AddAttribute(HtmlTextWriterAttribute.Class, labelCssClass);
                 writer.AddAttribute(HtmlTextWriterAttribute.For, ClientID);
                 writer.RenderBeginTag(HtmlTextWriterTag.Label);
                 writer.Write(Label);
