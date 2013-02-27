@@ -21,8 +21,8 @@
     <ApiFilter />
     <ComponentConfigurations />
     <DocumentationSources>
-      <DocumentationSource sourceFile="..\Basil.Core\bin\Debug\Basil.XML" />
-      <DocumentationSource sourceFile="..\Basil.Core\bin\Debug\Basil.dll" />
+      <DocumentationSource sourceFile="..\Basil.Core\bin\Basil.XML" />
+      <DocumentationSource sourceFile="..\Basil.Core\bin\Basil.dll" />
     </DocumentationSources>
     <HelpAttributes />
     <NamespaceSummaries>

@@ -17,11 +17,11 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\Basil.XML</DocumentationFile>
+    <DocumentationFile>bin\Basil.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -61,6 +61,14 @@
     <Compile Include="Validators\BasilSocialSecurityNumberValidator.cs" />
     <Compile Include="Validators\BasilValidation.cs" />
     <Compile Include="Validators\BasilZipValidator.cs" />
+    <Compile Include="Validators\DataTypeValidator.cs" />
+    <Compile Include="WebControls\BasilCheckBox.cs" />
+    <Compile Include="WebControls\BasilCheckBoxList.cs" />
+    <Compile Include="WebControls\BasilDropDownList.cs" />
+    <Compile Include="WebControls\BasilRadioButtonList.cs" />
+    <Compile Include="WebControls\BasilTextBox.cs" />
+    <Compile Include="Interfaces\IBasilWebControl.cs" />
+    <Compile Include="Enums\RequiredTypes.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
