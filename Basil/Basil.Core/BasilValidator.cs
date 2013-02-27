@@ -1,9 +1,9 @@
 ﻿using Basil.Helpers;
 using Basil.Settings;
+using Basil.Validators;
+using Basil.WebControls;
 using System;
 using System.Linq;
-using System.Net.Mail;
-using System.Text.RegularExpressions;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -97,72 +97,6 @@ namespace Basil
 
         #endregion Control States
 
-        #region Type Validators
-
-        private static bool IsNumeric(string num)
-        {
-            double myNum = 0;
-
-            return Double.TryParse(num, out myNum);
-        }
-
-        private static bool IsValidZipCode(string zip)
-        {
-            return IsNumeric(zip);
-        }
-
-        private bool IsValidPhoneNumber(string phone)
-        {
-            var matchRegex = new Regex(Settings.PhoneValidation.Regex, RegexOptions.IgnorePatternWhitespace);
-            var matches = matchRegex.Matches(phone);
-
-            return matches.Count != 0;
-        }
-
-        private static bool IsValidEmailAddress(string email)
-        {
-            //var matchRegex = new Regex(Settings.EmailValidation.Regex);
-            //var matches = matchRegex.Matches(email);
-
-            //return matches.Count != 0;
-
-            try
-            {
-                // This will throw an exception if an invalid email address is passed
-                new MailAddress(email);
-
-                return true;
-            }
-            catch
-            {
-            }
-
-            return false;
-        }
-
-        private bool IsValidSSN(string ssn)
-        {
-            //Return (ssn Like "###-##-####") Or (ssn Like "#########")
-            var matchregex = new Regex(Settings.SocialSecurityNumberValidation.Regex);
-            var matches = matchregex.Matches(ssn);
-
-            return matches.Count != 0;
-        }
-
-        private static bool IsValidNumber(string num)
-        {
-            return IsNumeric(num);
-        }
-
-        private static bool IsValidDate(string text)
-        {
-            DateTime temp;
-
-            return DateTime.TryParse(text, out temp);
-        }
-
-        #endregion Type Validators
-
         public BasilValidator(bool addRelEqualsTooltip = false)
         {
             Settings = new BasilSettings();
@@ -174,6 +108,52 @@ namespace Basil
         {
             // Default to valid
             IsValid = true;
+
+            #region Validate Basil Types
+
+            // Validate all BasilTextBox controls
+            var btbControls = ControlHelper.GetControlsOfType<BasilTextBox>(control).Where(x => x.Required).ToList();
+            var bcbControls = ControlHelper.GetControlsOfType<BasilCheckBox>(control).Where(x => x.Required).ToList();
+            var bcblControls = ControlHelper.GetControlsOfType<BasilCheckBoxList>(control).Where(x => x.Required).ToList();
+            var brbControls = ControlHelper.GetControlsOfType<BasilRadioButtonList>(control).Where(x => x.Required).ToList();
+            var bddlControls = ControlHelper.GetControlsOfType<BasilDropDownList>(control).Where(x => x.Required).ToList();
+
+            foreach (var ctrl in btbControls)
+            {
+                ctrl.Validate(this);
+            }
+
+            foreach (var ctrl in bcbControls)
+            {
+                ctrl.Validate(this);
+            }
+
+            foreach (var ctrl in bcblControls)
+            {
+                ctrl.Validate(this);
+            }
+
+            foreach (var ctrl in brbControls)
+            {
+                ctrl.Validate(this);
+            }
+
+            foreach (var ctrl in bddlControls)
+            {
+                ctrl.Validate(this);
+            }
+
+            if (!btbControls.All(x => x.IsValid)) IsValid = false;
+            if (!bcbControls.All(x => x.IsValid)) IsValid = false;
+            if (!bcblControls.All(x => x.IsValid)) IsValid = false;
+            if (!brbControls.All(x => x.IsValid)) IsValid = false;
+            if (!bddlControls.All(x => x.IsValid)) IsValid = false;
+
+            if (!IsValid) return IsValid;
+
+            #endregion Validate Basil Types
+
+            #region Validate .NET Types
 
             // Get the list of controls we want to validate
             var cbControls = ControlHelper.GetControlsOfType<CheckBox>(control).Where(x => x.Attributes["data-required"] != null).ToList();
@@ -216,40 +196,42 @@ namespace Basil
 
                 if (dataType.Equals("zip", StringComparison.OrdinalIgnoreCase))
                 {
-                    if (IsValidZipCode(tbControl.Text)) SetControlState(tbControl, ControlState.Valid);
+                    if (DataTypeValidator.IsValidZipCode(tbControl.Text)) SetControlState(tbControl, ControlState.Valid);
                     else SetControlState(tbControl, ControlState.Invalid, Settings.ZipValidation.Message);
                 }
 
                 if (dataType.Equals("phone", StringComparison.OrdinalIgnoreCase))
                 {
-                    if (IsValidPhoneNumber(tbControl.Text)) SetControlState(tbControl, ControlState.Valid);
+                    if (DataTypeValidator.IsValidPhoneNumber(this, tbControl.Text)) SetControlState(tbControl, ControlState.Valid);
                     else SetControlState(tbControl, ControlState.Invalid, Settings.PhoneValidation.Message);
                 }
 
                 if (dataType.Equals("email", StringComparison.OrdinalIgnoreCase))
                 {
-                    if (IsValidEmailAddress(tbControl.Text)) SetControlState(tbControl, ControlState.Valid);
+                    if (DataTypeValidator.IsValidEmailAddress(tbControl.Text)) SetControlState(tbControl, ControlState.Valid);
                     else SetControlState(tbControl, ControlState.Invalid, Settings.EmailValidation.Message);
                 }
 
                 if (dataType.Equals("ssn", StringComparison.OrdinalIgnoreCase))
                 {
-                    if (IsValidSSN(tbControl.Text)) SetControlState(tbControl, ControlState.Valid);
+                    if (DataTypeValidator.IsValidSSN(this, tbControl.Text)) SetControlState(tbControl, ControlState.Valid);
                     else SetControlState(tbControl, ControlState.Invalid, Settings.SocialSecurityNumberValidation.Message);
                 }
 
                 if (dataType.Equals("number", StringComparison.OrdinalIgnoreCase))
                 {
-                    if (IsValidNumber(tbControl.Text)) SetControlState(tbControl, ControlState.Valid);
+                    if (DataTypeValidator.IsValidNumber(tbControl.Text)) SetControlState(tbControl, ControlState.Valid);
                     else SetControlState(tbControl, ControlState.Invalid, Settings.NumericEntryValidation.Message);
                 }
 
                 if (dataType.Equals("date", StringComparison.OrdinalIgnoreCase))
                 {
-                    if (IsValidDate(tbControl.Text)) SetControlState(tbControl, ControlState.Valid);
+                    if (DataTypeValidator.IsValidDate(tbControl.Text)) SetControlState(tbControl, ControlState.Valid);
                     else SetControlState(tbControl, ControlState.Invalid, Settings.DateValidation.Message);
                 }
             }
+
+            #endregion Validate .NET Types
 
             return IsValid;
         }
