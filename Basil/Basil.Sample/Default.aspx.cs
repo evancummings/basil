@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace Basil.Sample
 {
@@ -11,7 +6,21 @@ namespace Basil.Sample
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+        }
 
+        protected void btnSubmit_Click(object sender, EventArgs e)
+        {
+            pnlSuccess.Visible = false;
+
+            var validator = new BasilValidator();
+            validator.Validate(pnlForm);
+
+            if (validator.IsValid)
+            {
+                // Validation has passed on all controls, do stuff
+
+                pnlSuccess.Visible = true;
+            }
         }
     }
 }
