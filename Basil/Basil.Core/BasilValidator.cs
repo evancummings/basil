@@ -97,6 +97,10 @@ namespace Basil
 
         #endregion Control States
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="addRelEqualsTooltip"></param>
         public BasilValidator(bool addRelEqualsTooltip = false)
         {
             Settings = new BasilSettings();
@@ -104,6 +108,23 @@ namespace Basil
             AddRelEqualsTooltip = addRelEqualsTooltip;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="settings"></param>
+        /// <param name="addRelEqualsTooltip"></param>
+        public BasilValidator(BasilSettings settings, bool addRelEqualsTooltip = false)
+        {
+            Settings = settings;
+
+            AddRelEqualsTooltip = addRelEqualsTooltip;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="control"></param>
+        /// <returns></returns>
         public bool Validate(Control control)
         {
             // Default to valid

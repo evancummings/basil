@@ -4,8 +4,10 @@ namespace Basil.Controls
 {
     public class BasilControl
     {
+        [System.Obsolete("InvalidColors is obsolete. Use ErrorCssClass instead.")]
         public BasilColorSet InvalidColors { get; set; }
 
+        [System.Obsolete("Valid Colors is obsolete. Use ErrorCssClass instead.")]
         public BasilColorSet ValidColors { get; set; }
 
         public string ErrorCssClass { get; set; }
