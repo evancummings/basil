@@ -10,6 +10,22 @@ namespace Basil.WebControls
 
         public string Label { get; set; }
 
+        private string _errorMessage;
+
+        public string ErrorMessage
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_errorMessage))
+                {
+                    _errorMessage = Validator.Settings.RequiredFieldValidation.Message;
+                }
+
+                return _errorMessage;
+            }
+            set { _errorMessage = value; }
+        }
+
         public bool Required { get; set; }
 
         public bool IsValid { get; set; }
@@ -20,6 +36,8 @@ namespace Basil.WebControls
 
         public bool IsSuccess { get; set; }
 
+        public bool RenderControlGroupMarkup { get; set; }
+
         public BasilValidator Validator { get; set; }
 
         #endregion Properties
@@ -28,6 +46,7 @@ namespace Basil.WebControls
         {
             IsValid = true;
             Required = false;
+            RenderControlGroupMarkup = true;
         }
 
         public void Validate(BasilValidator validator = null)
@@ -38,32 +57,41 @@ namespace Basil.WebControls
             if (!Required) return;
 
             IsValid = (SelectedIndex > 0 && !string.IsNullOrEmpty(SelectedValue));
+
+            if (!IsValid && Validator != null && !string.IsNullOrEmpty(Label))
+            {
+                Validator.Errors.Add(string.Format("<strong>{0}:</strong> {1}", Label, ErrorMessage));
+            }
         }
 
         protected override void Render(HtmlTextWriter writer)
         {
-            var cssClass = "control-group";
-
-            if (!IsValid) cssClass += string.Format(" {0}", Validator.Settings.DropDownList.ErrorCssClass);
-            if (IsWarning) cssClass += string.Format(" {0}", Validator.Settings.DropDownList.WarningCssClass);
-            if (IsInfo) cssClass += string.Format(" {0}", Validator.Settings.DropDownList.InfoCssClass);
-            if (IsSuccess) cssClass += string.Format(" {0}", Validator.Settings.DropDownList.SuccessCssClass);
-
-            writer.AddAttribute(HtmlTextWriterAttribute.Class, cssClass);
-            writer.RenderBeginTag(HtmlTextWriterTag.Div);
-
-            if (!string.IsNullOrEmpty(Label))
+            if (RenderControlGroupMarkup)
             {
-                var labelCssClass = (Required) ? "control-label required" : "control-label";
+                var cssClass = "control-group";
 
-                writer.AddAttribute(HtmlTextWriterAttribute.Class, labelCssClass);
-                writer.AddAttribute(HtmlTextWriterAttribute.For, ClientID);
-                writer.RenderBeginTag(HtmlTextWriterTag.Label);
-                writer.Write(Label);
-                writer.RenderEndTag();// label control-label
+                if (!IsValid) cssClass += string.Format(" {0}", Validator.Settings.DropDownList.ErrorCssClass);
+                if (IsWarning) cssClass += string.Format(" {0}", Validator.Settings.DropDownList.WarningCssClass);
+                if (IsInfo) cssClass += string.Format(" {0}", Validator.Settings.DropDownList.InfoCssClass);
+                if (IsSuccess) cssClass += string.Format(" {0}", Validator.Settings.DropDownList.SuccessCssClass);
+
+                writer.AddAttribute(HtmlTextWriterAttribute.Class, cssClass);
+                writer.RenderBeginTag(HtmlTextWriterTag.Div);
+
+                if (!string.IsNullOrEmpty(Label))
+                {
+                    var labelCssClass = (Required) ? "control-label required" : "control-label";
+
+                    writer.AddAttribute(HtmlTextWriterAttribute.Class, labelCssClass);
+                    writer.AddAttribute(HtmlTextWriterAttribute.For, ClientID);
+                    writer.RenderBeginTag(HtmlTextWriterTag.Label);
+                    writer.Write(Label);
+                    writer.RenderEndTag();// label control-label
+                }
+
+                writer.AddAttribute(HtmlTextWriterAttribute.Class, "controls");
             }
 
-            writer.AddAttribute(HtmlTextWriterAttribute.Class, "controls");
             writer.RenderBeginTag(HtmlTextWriterTag.Div);
 
             // Write the textfield
@@ -73,13 +101,16 @@ namespace Basil.WebControls
             {
                 writer.AddAttribute(HtmlTextWriterAttribute.Class, "help-inline");
                 writer.RenderBeginTag(HtmlTextWriterTag.Span);
-                writer.Write(Validator.Settings.RequiredFieldValidation.Message);
+                writer.Write(ErrorMessage);
                 writer.RenderEndTag();// span help-inline
             }
 
             writer.RenderEndTag();// div controls
 
-            writer.RenderEndTag();// div control-group
+            if (RenderControlGroupMarkup)
+            {
+                writer.RenderEndTag(); // div control-group
+            }
         }
     }
 }
