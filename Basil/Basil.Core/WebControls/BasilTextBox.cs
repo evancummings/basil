@@ -12,6 +12,51 @@ namespace Basil.WebControls
 
         public string Label { get; set; }
 
+        private string _errorMessage;
+
+        public string ErrorMessage
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_errorMessage))
+                {
+                    switch (RequiredType)
+                    {
+                        case RequiredTypes.Text:
+                            _errorMessage = Validator.Settings.RequiredFieldValidation.Message;
+                            break;
+
+                        case RequiredTypes.Zip:
+                            _errorMessage = Validator.Settings.ZipValidation.Message;
+                            break;
+
+                        case RequiredTypes.Phone:
+                            _errorMessage = Validator.Settings.PhoneValidation.Message;
+                            break;
+
+                        case RequiredTypes.Email:
+                            _errorMessage = Validator.Settings.EmailValidation.Message;
+                            break;
+
+                        case RequiredTypes.SSN:
+                            _errorMessage = Validator.Settings.SocialSecurityNumberValidation.Message;
+                            break;
+
+                        case RequiredTypes.Number:
+                            _errorMessage = Validator.Settings.NumericEntryValidation.Message;
+                            break;
+
+                        case RequiredTypes.Date:
+                            _errorMessage = Validator.Settings.DateValidation.Message;
+                            break;
+                    }
+                }
+
+                return _errorMessage;
+            }
+            set { _errorMessage = value; }
+        }
+
         public RequiredTypes RequiredType { get; set; }
 
         public bool Required { get; set; }
@@ -24,6 +69,8 @@ namespace Basil.WebControls
 
         public bool IsSuccess { get; set; }
 
+        public bool RenderControlGroupMarkup { get; set; }
+
         public BasilValidator Validator { get; set; }
 
         #endregion Properties
@@ -32,6 +79,7 @@ namespace Basil.WebControls
         {
             IsValid = true;
             Required = false;
+            RenderControlGroupMarkup = true;
             RequiredType = RequiredTypes.Text;
         }
 
@@ -72,32 +120,41 @@ namespace Basil.WebControls
                     IsValid = DataTypeValidator.IsValidDate(Text);
                     break;
             }
+
+            if (!IsValid && Validator != null && !string.IsNullOrEmpty(Label))
+            {
+                Validator.Errors.Add(string.Format("<strong>{0}:</strong> {1}", Label, ErrorMessage));
+            }
         }
 
         protected override void Render(HtmlTextWriter writer)
         {
-            var cssClass = "control-group";
-
-            if (!IsValid) cssClass += string.Format(" {0}", Validator.Settings.Textbox.ErrorCssClass);
-            if (IsWarning) cssClass += string.Format(" {0}", Validator.Settings.Textbox.WarningCssClass);
-            if (IsInfo) cssClass += string.Format(" {0}", Validator.Settings.Textbox.InfoCssClass);
-            if (IsSuccess) cssClass += string.Format(" {0}", Validator.Settings.Textbox.SuccessCssClass);
-
-            writer.AddAttribute(HtmlTextWriterAttribute.Class, cssClass);
-            writer.RenderBeginTag(HtmlTextWriterTag.Div);
-
-            if (!string.IsNullOrEmpty(Label))
+            if (RenderControlGroupMarkup)
             {
-                var labelCssClass = (Required) ? "control-label required" : "control-label";
+                var cssClass = "control-group";
 
-                writer.AddAttribute(HtmlTextWriterAttribute.Class, labelCssClass);
-                writer.AddAttribute(HtmlTextWriterAttribute.For, ClientID);
-                writer.RenderBeginTag(HtmlTextWriterTag.Label);
-                writer.Write(Label);
-                writer.RenderEndTag();// label control-label
+                if (!IsValid) cssClass += string.Format(" {0}", Validator.Settings.Textbox.ErrorCssClass);
+                if (IsWarning) cssClass += string.Format(" {0}", Validator.Settings.Textbox.WarningCssClass);
+                if (IsInfo) cssClass += string.Format(" {0}", Validator.Settings.Textbox.InfoCssClass);
+                if (IsSuccess) cssClass += string.Format(" {0}", Validator.Settings.Textbox.SuccessCssClass);
+
+                writer.AddAttribute(HtmlTextWriterAttribute.Class, cssClass);
+                writer.RenderBeginTag(HtmlTextWriterTag.Div);
+
+                if (!string.IsNullOrEmpty(Label))
+                {
+                    var labelCssClass = (Required) ? "control-label required" : "control-label";
+
+                    writer.AddAttribute(HtmlTextWriterAttribute.Class, labelCssClass);
+                    writer.AddAttribute(HtmlTextWriterAttribute.For, ClientID);
+                    writer.RenderBeginTag(HtmlTextWriterTag.Label);
+                    writer.Write(Label);
+                    writer.RenderEndTag();// label control-label
+                }
+
+                writer.AddAttribute(HtmlTextWriterAttribute.Class, "controls");
             }
 
-            writer.AddAttribute(HtmlTextWriterAttribute.Class, "controls");
             writer.RenderBeginTag(HtmlTextWriterTag.Div);
 
             // Write the textfield
@@ -107,44 +164,16 @@ namespace Basil.WebControls
             {
                 writer.AddAttribute(HtmlTextWriterAttribute.Class, "help-inline");
                 writer.RenderBeginTag(HtmlTextWriterTag.Span);
-
-                switch (RequiredType)
-                {
-                    case RequiredTypes.Text:
-                        writer.Write(Validator.Settings.RequiredFieldValidation.Message);
-                        break;
-
-                    case RequiredTypes.Zip:
-                        writer.Write(Validator.Settings.ZipValidation.Message);
-                        break;
-
-                    case RequiredTypes.Phone:
-                        writer.Write(Validator.Settings.PhoneValidation.Message);
-                        break;
-
-                    case RequiredTypes.Email:
-                        writer.Write(Validator.Settings.EmailValidation.Message);
-                        break;
-
-                    case RequiredTypes.SSN:
-                        writer.Write(Validator.Settings.SocialSecurityNumberValidation.Message);
-                        break;
-
-                    case RequiredTypes.Number:
-                        writer.Write(Validator.Settings.NumericEntryValidation.Message);
-                        break;
-
-                    case RequiredTypes.Date:
-                        writer.Write(Validator.Settings.DateValidation.Message);
-                        break;
-                }
-
+                writer.Write(ErrorMessage);
                 writer.RenderEndTag();// span help-inline
             }
 
             writer.RenderEndTag();// div controls
 
-            writer.RenderEndTag();// div control-group
+            if (RenderControlGroupMarkup)
+            {
+                writer.RenderEndTag(); // div control-group
+            }
         }
     }
 }

@@ -3,6 +3,7 @@ using Basil.Settings;
 using Basil.Validators;
 using Basil.WebControls;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -28,6 +29,8 @@ namespace Basil
         public bool IsValid { get; set; }
 
         public bool AddRelEqualsTooltip { get; set; }
+
+        public List<string> Errors { get; set; }
 
         #endregion Properties
 
@@ -98,7 +101,7 @@ namespace Basil
         #endregion Control States
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="addRelEqualsTooltip"></param>
         public BasilValidator(bool addRelEqualsTooltip = false)
@@ -109,7 +112,7 @@ namespace Basil
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="settings"></param>
         /// <param name="addRelEqualsTooltip"></param>
@@ -121,7 +124,24 @@ namespace Basil
         }
 
         /// <summary>
-        /// 
+        ///
+        /// </summary>
+        /// <param name="control"></param>
+        /// <param name="errors"></param>
+        /// <returns></returns>
+        public bool Validate(Control control, out List<string> errors)
+        {
+            var validator = Validate(control);
+
+            errors = Errors;
+
+            IsValid = !errors.Any();
+
+            return validator;
+        }
+
+        /// <summary>
+        ///
         /// </summary>
         /// <param name="control"></param>
         /// <returns></returns>
@@ -129,6 +149,7 @@ namespace Basil
         {
             // Default to valid
             IsValid = true;
+            Errors = new List<string>();
 
             #region Validate Basil Types
 
