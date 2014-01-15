@@ -1,11 +1,39 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace Basil.Helpers
 {
     public static class ControlHelper
     {
+        /// <summary>
+        /// Can be used to apply error class to a controls parent if markup is all server side panels
+        /// </summary>
+        public static void ApplyErrorClassToControlGroup(Control control)
+        {
+            var pnlControls = FindImmediateParentOfType<Panel>(control);
+            if (pnlControls == null) return;
+
+            var pnlControlGroup = FindImmediateParentOfType<Panel>(pnlControls);
+            if (pnlControlGroup != null)
+            {
+                pnlControlGroup.CssClass += " error";
+            }
+        }
+
+        public static void RemoveErrorClassToControlGroup(Control control)
+        {
+            var pnlControls = FindImmediateParentOfType<Panel>(control);
+            if (pnlControls == null) return;
+
+            var pnlControlGroup = FindImmediateParentOfType<Panel>(pnlControls);
+            if (pnlControlGroup != null)
+            {
+                pnlControlGroup.CssClass = "control-group";
+            }
+        }
+
         public static T FindImmediateParentOfType<T>(Control control) where T : Control
         {
             T retVal = default(T);

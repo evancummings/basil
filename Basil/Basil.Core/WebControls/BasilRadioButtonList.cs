@@ -120,8 +120,8 @@ namespace Basil.WebControls
             writer.RenderBeginTag(HtmlTextWriterTag.Label);
 
             writer.AddAttribute(HtmlTextWriterAttribute.Type, "radio");
-            writer.AddAttribute(HtmlTextWriterAttribute.Name, UniqueID + IdSeparator + repeatIndex.ToString(NumberFormatInfo.InvariantInfo));
-            writer.AddAttribute(HtmlTextWriterAttribute.Id, ClientID + ClientIDSeparator + repeatIndex.ToString(NumberFormatInfo.InvariantInfo));
+            writer.AddAttribute(HtmlTextWriterAttribute.Name, UniqueID + IdSeparator);
+            writer.AddAttribute(HtmlTextWriterAttribute.Id, ClientID + ClientIDSeparator);
             writer.AddAttribute(HtmlTextWriterAttribute.Value, Items[repeatIndex].Value);
 
             if (Items[repeatIndex].Selected) writer.AddAttribute(HtmlTextWriterAttribute.Checked, "checked");
