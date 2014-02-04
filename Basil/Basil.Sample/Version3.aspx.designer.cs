@@ -91,7 +91,7 @@ namespace Basil.Sample {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Basil.WebControls.V3.BasilTextBox btbFirstName;
+        protected global::Basil.WebControls.BasilTextBox btbFirstName;
         
         /// <summary>
         /// btbLastName control.
@@ -100,7 +100,7 @@ namespace Basil.Sample {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Basil.WebControls.V3.BasilTextBox btbLastName;
+        protected global::Basil.WebControls.BasilTextBox btbLastName;
         
         /// <summary>
         /// btbEmail control.
@@ -109,7 +109,7 @@ namespace Basil.Sample {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Basil.WebControls.V3.BasilTextBox btbEmail;
+        protected global::Basil.WebControls.BasilTextBox btbEmail;
         
         /// <summary>
         /// bcbIsSomething control.
@@ -118,7 +118,7 @@ namespace Basil.Sample {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Basil.WebControls.V3.BasilCheckBox bcbIsSomething;
+        protected global::Basil.WebControls.BasilCheckBox bcbIsSomething;
         
         /// <summary>
         /// bddlItems control.
@@ -127,7 +127,7 @@ namespace Basil.Sample {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Basil.WebControls.V3.BasilDropDownList bddlItems;
+        protected global::Basil.WebControls.BasilDropDownList bddlItems;
         
         /// <summary>
         /// brblItems control.
@@ -136,7 +136,7 @@ namespace Basil.Sample {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Basil.WebControls.V3.BasilRadioButtonList brblItems;
+        protected global::Basil.WebControls.BasilRadioButtonList brblItems;
         
         /// <summary>
         /// bcblItems control.
@@ -145,7 +145,7 @@ namespace Basil.Sample {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Basil.WebControls.V3.BasilCheckBoxList bcblItems;
+        protected global::Basil.WebControls.BasilCheckBoxList bcblItems;
         
         /// <summary>
         /// pnlFormTwo control.
@@ -163,7 +163,7 @@ namespace Basil.Sample {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Basil.WebControls.V3.BasilTextBox btbGroupTwo;
+        protected global::Basil.WebControls.BasilTextBox btbGroupTwo;
         
         /// <summary>
         /// btnSubmit control.

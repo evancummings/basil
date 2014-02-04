@@ -1,4 +1,6 @@
-﻿namespace Basil.Interfaces
+﻿using System.Web.UI;
+
+namespace Basil.Interfaces
 {
     public interface IBasilWebControl
     {
@@ -14,6 +16,14 @@
 
         bool IsSuccess { get; set; }
 
+        bool HasFeedback { get; set; }
+
+        bool RenderControlGroupMarkup { get; set; }
+
         BasilValidator Validator { get; set; }
+
+        void RenderBoostrapV2(HtmlTextWriter writer);
+
+        void RenderBoostrapV3(HtmlTextWriter writer);
     }
 }

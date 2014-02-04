@@ -1,5 +1,7 @@
-﻿using Basil.Interfaces;
-using System.Globalization;
+﻿using Basil.Enums;
+using Basil.Helpers;
+using Basil.Interfaces;
+using Basil.Settings;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -37,6 +39,8 @@ namespace Basil.WebControls
 
         public bool IsSuccess { get; set; }
 
+        public bool HasFeedback { get; set; }
+
         public bool RenderControlGroupMarkup { get; set; }
 
         public BasilValidator Validator { get; set; }
@@ -47,7 +51,6 @@ namespace Basil.WebControls
         {
             IsValid = true;
             Required = false;
-            RenderControlGroupMarkup = true;
         }
 
         public void Validate(BasilValidator validator = null)
@@ -67,14 +70,23 @@ namespace Basil.WebControls
 
         protected override void Render(HtmlTextWriter writer)
         {
+            switch (BasilSettings.BootstrapVersion)
+            {
+                case BootstrapVersions.V2:
+                    RenderBoostrapV2(writer);
+                    break;
+
+                case BootstrapVersions.V3:
+                    RenderBoostrapV2(writer);
+                    break;
+            }
+        }
+
+        public void RenderBoostrapV2(HtmlTextWriter writer)
+        {
             if (RenderControlGroupMarkup)
             {
-                var cssClass = "control-group";
-
-                if (!IsValid) cssClass += string.Format(" {0}", Validator.Settings.RadioButtonList.ErrorCssClass);
-                if (IsWarning) cssClass += string.Format(" {0}", Validator.Settings.RadioButtonList.WarningCssClass);
-                if (IsInfo) cssClass += string.Format(" {0}", Validator.Settings.RadioButtonList.InfoCssClass);
-                if (IsSuccess) cssClass += string.Format(" {0}", Validator.Settings.RadioButtonList.SuccessCssClass);
+                var cssClass = BasilHelper.GetCssClass(this);
 
                 writer.AddAttribute(HtmlTextWriterAttribute.Class, cssClass);
                 writer.RenderBeginTag(HtmlTextWriterTag.Div);
@@ -114,9 +126,48 @@ namespace Basil.WebControls
             }
         }
 
+        public void RenderBoostrapV3(HtmlTextWriter writer)
+        {
+            var cssClass = BasilHelper.GetCssClass(this);
+
+            writer.AddAttribute(HtmlTextWriterAttribute.Class, cssClass);
+            writer.RenderBeginTag(HtmlTextWriterTag.Div);
+
+            if (!string.IsNullOrEmpty(Label))
+            {
+                var labelCssClass = (Required) ? "control-label required" : "control-label";
+
+                writer.AddAttribute(HtmlTextWriterAttribute.Class, labelCssClass);
+                writer.AddAttribute(HtmlTextWriterAttribute.For, ClientID);
+                writer.RenderBeginTag(HtmlTextWriterTag.Label);
+                writer.Write(Label);
+                writer.RenderEndTag();// label control-label
+            }
+
+            // Write the textfield
+            base.Render(writer);
+
+            if (!IsValid && Validator != null)
+            {
+                if (HasFeedback)
+                {
+                    writer.Write("<span class=\"glyphicon glyphicon-warning-sign form-control-feedback\"></span>");
+                }
+
+                writer.AddAttribute(HtmlTextWriterAttribute.Class, "help-block");
+                writer.RenderBeginTag(HtmlTextWriterTag.Span);
+                writer.Write(ErrorMessage);
+                writer.RenderEndTag();// span help-block
+            }
+
+            writer.RenderEndTag(); // div form-group
+        }
+
         void IRepeatInfoUser.RenderItem(ListItemType itemType, int repeatIndex, RepeatInfo repeatInfo, HtmlTextWriter writer)
         {
             writer.AddAttribute(HtmlTextWriterAttribute.Class, "radio");
+            writer.RenderBeginTag(HtmlTextWriterTag.Div);
+
             writer.RenderBeginTag(HtmlTextWriterTag.Label);
 
             writer.AddAttribute(HtmlTextWriterAttribute.Type, "radio");
@@ -136,7 +187,9 @@ namespace Basil.WebControls
             writer.Write(Items[repeatIndex].Text);
             writer.RenderEndTag();
 
-            writer.RenderEndTag();// label radio
+            writer.RenderEndTag();// label
+
+            writer.RenderEndTag();// div radio
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Basil.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -22,8 +21,8 @@ namespace Basil.Sample
 
             var validator = new BasilValidator();
 
-            validator.Validate(BootstrapVersions.V3, pnlForm, out errors);
-            validator.Validate(BootstrapVersions.V3, pnlFormTwo, out errors2);
+            validator.Validate(pnlForm, out errors);
+            validator.Validate(pnlFormTwo, out errors2);
 
             if (errors.Any())
             {

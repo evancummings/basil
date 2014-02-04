@@ -1,5 +1,7 @@
 ﻿using Basil.Enums;
+using Basil.Helpers;
 using Basil.Interfaces;
+using Basil.Settings;
 using Basil.Validators;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -69,6 +71,8 @@ namespace Basil.WebControls
 
         public bool IsSuccess { get; set; }
 
+        public bool HasFeedback { get; set; }
+
         public bool RenderControlGroupMarkup { get; set; }
 
         public BasilValidator Validator { get; set; }
@@ -79,7 +83,6 @@ namespace Basil.WebControls
         {
             IsValid = true;
             Required = false;
-            RenderControlGroupMarkup = true;
             RequiredType = RequiredTypes.Text;
         }
 
@@ -129,14 +132,23 @@ namespace Basil.WebControls
 
         protected override void Render(HtmlTextWriter writer)
         {
+            switch (BasilSettings.BootstrapVersion)
+            {
+                case BootstrapVersions.V2:
+                    RenderBoostrapV2(writer);
+                    break;
+
+                case BootstrapVersions.V3:
+                    RenderBoostrapV2(writer);
+                    break;
+            }
+        }
+
+        public void RenderBoostrapV2(HtmlTextWriter writer)
+        {
             if (RenderControlGroupMarkup)
             {
-                var cssClass = "control-group";
-
-                if (!IsValid) cssClass += string.Format(" {0}", Validator.Settings.Textbox.ErrorCssClass);
-                if (IsWarning) cssClass += string.Format(" {0}", Validator.Settings.Textbox.WarningCssClass);
-                if (IsInfo) cssClass += string.Format(" {0}", Validator.Settings.Textbox.InfoCssClass);
-                if (IsSuccess) cssClass += string.Format(" {0}", Validator.Settings.Textbox.SuccessCssClass);
+                var cssClass = BasilHelper.GetCssClass(this);
 
                 writer.AddAttribute(HtmlTextWriterAttribute.Class, cssClass);
                 writer.RenderBeginTag(HtmlTextWriterTag.Div);
@@ -174,6 +186,45 @@ namespace Basil.WebControls
             {
                 writer.RenderEndTag(); // div control-group
             }
+        }
+
+        public void RenderBoostrapV3(HtmlTextWriter writer)
+        {
+            if (string.IsNullOrEmpty(CssClass) || CssClass != "form-control") CssClass += " form-control";
+
+            var cssClass = BasilHelper.GetCssClass(this);
+
+            writer.AddAttribute(HtmlTextWriterAttribute.Class, cssClass);
+            writer.RenderBeginTag(HtmlTextWriterTag.Div);
+
+            if (!string.IsNullOrEmpty(Label))
+            {
+                var labelCssClass = (Required) ? "control-label required" : "control-label";
+
+                writer.AddAttribute(HtmlTextWriterAttribute.Class, labelCssClass);
+                writer.AddAttribute(HtmlTextWriterAttribute.For, ClientID);
+                writer.RenderBeginTag(HtmlTextWriterTag.Label);
+                writer.Write(Label);
+                writer.RenderEndTag();// label control-label
+            }
+
+            // Write the textfield
+            base.Render(writer);
+
+            if (!IsValid && Validator != null)
+            {
+                if (HasFeedback)
+                {
+                    writer.Write("<span class=\"glyphicon glyphicon-warning-sign form-control-feedback\"></span>");
+                }
+
+                writer.AddAttribute(HtmlTextWriterAttribute.Class, "help-block");
+                writer.RenderBeginTag(HtmlTextWriterTag.Span);
+                writer.Write(ErrorMessage);
+                writer.RenderEndTag();// span help-block
+            }
+
+            writer.RenderEndTag(); // div form-group
         }
     }
 }
