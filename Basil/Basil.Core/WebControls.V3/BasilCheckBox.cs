@@ -3,7 +3,7 @@ using Basil.Interfaces;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Basil.WebControls
+namespace Basil.WebControls.V3
 {
     public class BasilCheckBox : CheckBox, IBasilWebControl
     {
@@ -37,7 +37,7 @@ namespace Basil.WebControls
 
         public bool IsSuccess { get; set; }
 
-        public bool RenderControlGroupMarkup { get; set; }
+        public bool HasFeedback { get; set; }
 
         public BasilValidator Validator { get; set; }
 
@@ -47,7 +47,6 @@ namespace Basil.WebControls
         {
             IsValid = true;
             Required = false;
-            RenderControlGroupMarkup = true;
         }
 
         public void Validate(BasilValidator validator = null)
@@ -67,21 +66,15 @@ namespace Basil.WebControls
 
         protected override void Render(HtmlTextWriter writer)
         {
-            if (RenderControlGroupMarkup)
-            {
-                var cssClass = BootstrapHelper.FormGroupClass;
+            var cssClass = BootstrapHelper.FormGroupClass;
+            var feedback = HasFeedback ? " has-feedback" : string.Empty;
 
-                if (!IsValid) cssClass += string.Format(" {0}", Validator.Settings.Checkbox.ErrorCssClass);
-                if (IsWarning) cssClass += string.Format(" {0}", Validator.Settings.Checkbox.WarningCssClass);
-                if (IsInfo) cssClass += string.Format(" {0}", Validator.Settings.Checkbox.InfoCssClass);
-                if (IsSuccess) cssClass += string.Format(" {0}", Validator.Settings.Checkbox.SuccessCssClass);
+            if (!IsValid) cssClass += string.Format(" {0}{1}", Validator.Settings.Checkbox.ErrorCssClass, feedback);
+            if (IsWarning) cssClass += string.Format(" {0}{1}", Validator.Settings.Checkbox.WarningCssClass, feedback);
+            if (IsInfo) cssClass += string.Format(" {0}{1}", Validator.Settings.Checkbox.InfoCssClass, feedback);
+            if (IsSuccess) cssClass += string.Format(" {0}{1}", Validator.Settings.Checkbox.SuccessCssClass, feedback);
 
-                writer.AddAttribute(HtmlTextWriterAttribute.Class, cssClass);
-                writer.RenderBeginTag(HtmlTextWriterTag.Div);
-
-                writer.AddAttribute(HtmlTextWriterAttribute.Class, "controls");
-            }
-
+            writer.AddAttribute(HtmlTextWriterAttribute.Class, cssClass);
             writer.RenderBeginTag(HtmlTextWriterTag.Div);
 
             // Write the checkbox
@@ -99,18 +92,18 @@ namespace Basil.WebControls
 
             if (!IsValid && Validator != null)
             {
-                writer.AddAttribute(HtmlTextWriterAttribute.Class, "help-inline");
+                if (HasFeedback)
+                {
+                    writer.Write("<span class=\"glyphicon glyphicon-warning-sign form-control-feedback\"></span>");
+                }
+
+                writer.AddAttribute(HtmlTextWriterAttribute.Class, "help-block");
                 writer.RenderBeginTag(HtmlTextWriterTag.Span);
                 writer.Write(ErrorMessage);
-                writer.RenderEndTag();// span help-inline
+                writer.RenderEndTag();// span help-block
             }
 
-            writer.RenderEndTag();// div controls
-
-            if (RenderControlGroupMarkup)
-            {
-                writer.RenderEndTag(); // div control-group
-            }
+            writer.RenderEndTag(); // div form-group
         }
     }
 }

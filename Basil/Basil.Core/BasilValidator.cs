@@ -1,4 +1,5 @@
-﻿using Basil.Helpers;
+﻿using Basil.Enums;
+using Basil.Helpers;
 using Basil.Settings;
 using Basil.Validators;
 using Basil.WebControls;
@@ -123,15 +124,35 @@ namespace Basil
             AddRelEqualsTooltip = addRelEqualsTooltip;
         }
 
+        public bool Validate(BootstrapVersions version, Control control, out List<string> errors)
+        {
+            // TODO: Support future versions
+            switch (BasilSettings.BootstrapVersion)
+            {
+                case BootstrapVersions.V3:
+                    return ValidateV3(control, out errors);
+            }
+
+            return Validate(control, out errors);
+        }
+
         /// <summary>
-        ///
+        /// Validate controls in container (Bootstrap 2)
         /// </summary>
-        /// <param name="control"></param>
-        /// <param name="errors"></param>
-        /// <returns></returns>
         public bool Validate(Control control, out List<string> errors)
         {
-            var validator = Validate(control);
+            var validator = false;
+
+            switch (BasilSettings.BootstrapVersion)
+            {
+                case BootstrapVersions.V2:
+                    validator = Validate(control);
+                    break;
+
+                case BootstrapVersions.V3:
+                    validator = ValidateV3(control);
+                    break;
+            }
 
             errors = Errors;
 
@@ -141,10 +162,22 @@ namespace Basil
         }
 
         /// <summary>
-        ///
+        /// Validate controls in container (Bootstrap 2)
         /// </summary>
-        /// <param name="control"></param>
-        /// <returns></returns>
+        public bool ValidateV3(Control control, out List<string> errors)
+        {
+            var validator = ValidateV3(control);
+
+            errors = Errors;
+
+            IsValid = !errors.Any();
+
+            return validator;
+        }
+
+        /// <summary>
+        /// Validate controls in container (Bootstrap 2)
+        /// </summary>
         public bool Validate(Control control)
         {
             // Default to valid
@@ -272,6 +305,60 @@ namespace Basil
             }
 
             #endregion Validate .NET Types
+
+            return IsValid;
+        }
+
+        /// <summary>
+        /// Validate controls in container (Bootstrap 3)
+        /// </summary>
+        public bool ValidateV3(Control control)
+        {
+            // Default to valid
+            IsValid = true;
+            Errors = new List<string>();
+
+            #region Validate Basil Types
+
+            // Validate all BasilTextBox controls
+            var btbControls = ControlHelper.GetControlsOfType<WebControls.V3.BasilTextBox>(control).Where(x => x.Required).ToList();
+            var bcbControls = ControlHelper.GetControlsOfType<WebControls.V3.BasilCheckBox>(control).Where(x => x.Required).ToList();
+            var bcblControls = ControlHelper.GetControlsOfType<WebControls.V3.BasilCheckBoxList>(control).Where(x => x.Required).ToList();
+            var brbControls = ControlHelper.GetControlsOfType<WebControls.V3.BasilRadioButtonList>(control).Where(x => x.Required).ToList();
+            var bddlControls = ControlHelper.GetControlsOfType<WebControls.V3.BasilDropDownList>(control).Where(x => x.Required).ToList();
+
+            foreach (var ctrl in btbControls)
+            {
+                ctrl.Validate(this);
+            }
+
+            foreach (var ctrl in bcbControls)
+            {
+                ctrl.Validate(this);
+            }
+
+            foreach (var ctrl in bcblControls)
+            {
+                ctrl.Validate(this);
+            }
+
+            foreach (var ctrl in brbControls)
+            {
+                ctrl.Validate(this);
+            }
+
+            foreach (var ctrl in bddlControls)
+            {
+                ctrl.Validate(this);
+            }
+
+            if (!btbControls.All(x => x.IsValid)) IsValid = false;
+            if (!bcbControls.All(x => x.IsValid)) IsValid = false;
+            if (!bcblControls.All(x => x.IsValid)) IsValid = false;
+            if (!brbControls.All(x => x.IsValid)) IsValid = false;
+            if (!bddlControls.All(x => x.IsValid)) IsValid = false;
+
+            #endregion Validate Basil Types
 
             return IsValid;
         }

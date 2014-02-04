@@ -18,7 +18,7 @@ namespace Basil.Helpers
             var pnlControlGroup = FindImmediateParentOfType<Panel>(pnlControls);
             if (pnlControlGroup != null)
             {
-                pnlControlGroup.CssClass += " error";
+                pnlControlGroup.CssClass += " " + BootstrapHelper.FormGroupErrorClass;
             }
         }
 
@@ -30,7 +30,7 @@ namespace Basil.Helpers
             var pnlControlGroup = FindImmediateParentOfType<Panel>(pnlControls);
             if (pnlControlGroup != null)
             {
-                pnlControlGroup.CssClass = "control-group";
+                pnlControlGroup.CssClass = BootstrapHelper.FormGroupClass;
             }
         }
 
@@ -81,7 +81,7 @@ namespace Basil.Helpers
             var t = root as T;
             if (t != null) yield return t;
 
-            var container = root as Control;
+            var container = root;
             if (container != null)
                 foreach (var i in from Control c in container.Controls from i in GetControlsOfType<T>(c) select i)
                     yield return i;

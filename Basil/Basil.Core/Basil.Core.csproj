@@ -33,6 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -50,6 +51,8 @@
     <Compile Include="Controls\BasilDropDownList.cs" />
     <Compile Include="Controls\BasilRadioButtonList.cs" />
     <Compile Include="Controls\BasilTextbox.cs" />
+    <Compile Include="Enums\BootstrapVersions.cs" />
+    <Compile Include="Helpers\BootstrapHelper.cs" />
     <Compile Include="Helpers\ControlHelper.cs" />
     <Compile Include="Helpers\MessageHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -63,6 +66,11 @@
     <Compile Include="Validators\BasilValidation.cs" />
     <Compile Include="Validators\BasilZipValidator.cs" />
     <Compile Include="Validators\DataTypeValidator.cs" />
+    <Compile Include="WebControls.V3\BasilCheckBox.cs" />
+    <Compile Include="WebControls.V3\BasilCheckBoxList.cs" />
+    <Compile Include="WebControls.V3\BasilDropDownList.cs" />
+    <Compile Include="WebControls.V3\BasilRadioButtonList.cs" />
+    <Compile Include="WebControls.V3\BasilTextBox.cs" />
     <Compile Include="WebControls\BasilCheckBox.cs" />
     <Compile Include="WebControls\BasilCheckBoxList.cs" />
     <Compile Include="WebControls\BasilDropDownList.cs" />

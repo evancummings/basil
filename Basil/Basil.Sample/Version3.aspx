@@ -1,22 +1,22 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Basil.Sample.Default" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Version3.aspx.cs" Inherits="Basil.Sample.Version3" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
     <title>Basil Tests</title>
 
-    <link href="/Content/bootstrap2/bootstrap.min.css" rel="stylesheet" />
+    <link href="/Content/bootstrap3/bootstrap.min.css" rel="stylesheet" />
     <link href="/Content/Site.css" rel="stylesheet" />
 
     <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="/Scripts/bootstrap2/bootstrap.min.js"></script>
+    <script src="/Scripts/bootstrap3/bootstrap.min.js"></script>
 </head>
 <body>
     <form id="form1" runat="server">
         <asp:ScriptManager ID="ScriptManager1" runat="server" />
 
         <div class="container">
-            <h3>Basil Test Form</h3>
+            <h3>Basil Test Form (Bootstrap 3)</h3>
 
             <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                 <ContentTemplate>
@@ -29,44 +29,36 @@
                     </asp:Panel>
 
                     <asp:Panel runat="server" ID="pnlForm" CssClass="row-fluid">
-                        <basil:BasilTextBox runat="server" ID="btbFirstName" Label="First Name" Required="true" ErrorMessage="First name is required" />
+                        <basilv3:BasilTextBox runat="server" ID="btbFirstName" Label="First Name" Required="true" ErrorMessage="First name is required" HasFeedback="true" />
 
-                        <basil:BasilTextBox runat="server" ID="btbLastName" Label="Last Name" Required="true" />
+                        <basilv3:BasilTextBox runat="server" ID="btbLastName" Label="Last Name" Required="true" />
 
-                        <basil:BasilTextBox runat="server" ID="btbEmail" Label="Email Address" Required="true" RequiredType="Email" />
+                        <basilv3:BasilTextBox runat="server" ID="btbEmail" Label="Email Address" Required="true" RequiredType="Email" />
 
-                        <div class="control-group">
-                            <asp:Label runat="server" ID="Label1" AssociatedControlID="btbNoControlGroup" Text="No Control Group" />
+                        <basilv3:BasilCheckBox runat="server" ID="bcbIsSomething" Label="Required Checkbox" Required="true" />
 
-                            <div class="controls">
-                                <basil:BasilTextBox runat="server" ID="btbNoControlGroup" Required="true" RenderControlGroupMarkup="false" />
-                            </div>
-                        </div>
-
-                        <basil:BasilCheckBox runat="server" ID="bcbIsSomething" Label="Required Checkbox" Required="true" />
-
-                        <basil:BasilDropDownList runat="server" ID="bddlItems" Label="DropDownList Items" Required="true">
+                        <basilv3:BasilDropDownList runat="server" ID="bddlItems" Label="DropDownList Items" Required="true">
                             <asp:ListItem Text="- Select -" Value="" />
                             <asp:ListItem Text="Item 1" Value="1" />
                             <asp:ListItem Text="Item 2" Value="2" />
                             <asp:ListItem Text="Item 3" Value="3" />
-                        </basil:BasilDropDownList>
+                        </basilv3:BasilDropDownList>
 
-                        <basil:BasilRadioButtonList runat="server" ID="brblItems" Label="RadioButtonList Items" Required="true" CssClass="unstyled" RepeatLayout="UnorderedList">
+                        <basilv3:BasilRadioButtonList runat="server" ID="brblItems" Label="RadioButtonList Items" Required="true">
                             <asp:ListItem Text="Item 1" Value="1" />
                             <asp:ListItem Text="Item 2" Value="2" />
                             <asp:ListItem Text="Item 3" Value="3" />
-                        </basil:BasilRadioButtonList>
+                        </basilv3:BasilRadioButtonList>
 
-                        <basil:BasilCheckBoxList runat="server" ID="bcblItems" Label="CheckBoxList Items" Required="true" CssClass="unstyled" RepeatLayout="UnorderedList">
+                        <basilv3:BasilCheckBoxList runat="server" ID="bcblItems" Label="CheckBoxList Items" Required="true">
                             <asp:ListItem Text="Item 1" Value="1" />
                             <asp:ListItem Text="Item 2" Value="2" />
                             <asp:ListItem Text="Item 3" Value="3" />
-                        </basil:BasilCheckBoxList>
+                        </basilv3:BasilCheckBoxList>
                     </asp:Panel>
 
                     <asp:Panel runat="server" ID="pnlFormTwo" CssClass="row-fluid">
-                        <basil:BasilTextBox runat="server" ID="btbGroupTwo" Label="Business Name" Required="true" />
+                        <basilv3:BasilTextBox runat="server" ID="btbGroupTwo" Label="Business Name" Required="true" />
                     </asp:Panel>
 
                     <div class="form-actions">

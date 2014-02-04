@@ -1,5 +1,7 @@
 ﻿using Basil.Controls;
+using Basil.Enums;
 using Basil.Validators;
+using System.Configuration;
 
 namespace Basil.Settings
 {
@@ -28,6 +30,33 @@ namespace Basil.Settings
         public BasilSocialSecurityNumberValidator SocialSecurityNumberValidation { get; set; }
 
         public BasilDateValidator DateValidation { get; set; }
+
+        private static BootstrapVersions _bootstrapVersion;
+
+        public static BootstrapVersions BootstrapVersion
+        {
+            get
+            {
+                var setting = ConfigurationManager.AppSettings["Basil.Bootstrap.Version"];
+                if (setting != null)
+                {
+                    switch (setting)
+                    {
+                        case "2":
+                            _bootstrapVersion = BootstrapVersions.V2;
+                            break;
+
+                        case "3":
+                            _bootstrapVersion = BootstrapVersions.V3;
+                            break;
+                    }
+                }
+                else _bootstrapVersion = BootstrapVersions.V2;
+
+                return _bootstrapVersion;
+            }
+            set { _bootstrapVersion = value; }
+        }
 
         #endregion Properties
 
