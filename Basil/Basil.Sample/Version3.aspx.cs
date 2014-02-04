@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Basil.Enums;
+using Basil.Settings;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,6 +10,7 @@ namespace Basil.Sample
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            BasilSettings.BootstrapVersion = BootstrapVersions.V3;
         }
 
         protected void btnSubmit_Click(object sender, EventArgs e)

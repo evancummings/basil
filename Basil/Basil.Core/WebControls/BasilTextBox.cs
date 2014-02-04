@@ -77,6 +77,8 @@ namespace Basil.WebControls
 
         public BasilValidator Validator { get; set; }
 
+        public BootstrapVersions BootstrapVersion { get; set; }
+
         #endregion Properties
 
         public BasilTextBox()
@@ -84,6 +86,8 @@ namespace Basil.WebControls
             IsValid = true;
             Required = false;
             RequiredType = RequiredTypes.Text;
+            RenderControlGroupMarkup = true;
+            BootstrapVersion = BasilSettings.BootstrapVersion;
         }
 
         public void Validate(BasilValidator validator = null)

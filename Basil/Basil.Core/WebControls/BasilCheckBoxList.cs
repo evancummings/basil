@@ -47,12 +47,16 @@ namespace Basil.WebControls
 
         public BasilValidator Validator { get; set; }
 
+        public BootstrapVersions BootstrapVersion { get; set; }
+
         #endregion Properties
 
         public BasilCheckBoxList()
         {
             IsValid = true;
             Required = false;
+            RenderControlGroupMarkup = true;
+            BootstrapVersion = BasilSettings.BootstrapVersion;
         }
 
         public void Validate(BasilValidator validator = null)

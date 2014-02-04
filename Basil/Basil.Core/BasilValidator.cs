@@ -9,16 +9,6 @@ namespace Basil
 {
     public class BasilValidator
     {
-        #region Enumerations
-
-        private enum ControlState
-        {
-            Valid = 1,
-            Invalid = 2
-        }
-
-        #endregion Enumerations
-
         #region Properties
 
         public BasilSettings Settings { get; set; }
