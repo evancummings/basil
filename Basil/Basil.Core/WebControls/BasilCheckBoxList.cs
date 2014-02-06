@@ -83,7 +83,7 @@ namespace Basil.WebControls
                     break;
 
                 case BootstrapVersions.V3:
-                    RenderBoostrapV2(writer);
+                    RenderBoostrapV3(writer);
                     break;
             }
         }
