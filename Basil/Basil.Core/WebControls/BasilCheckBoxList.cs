@@ -137,6 +137,7 @@ namespace Basil.WebControls
         public void RenderBoostrapV3(HtmlTextWriter writer)
         {
             if (string.IsNullOrEmpty(CssClass)) CssClass = "list-unstyled";
+            if (CssClass != "list-unstyled") CssClass = string.Format("list-unstyled {0}", CssClass);
 
             var cssClass = BasilHelper.GetCssClass(this, BootstrapVersion);
 

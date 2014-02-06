@@ -195,6 +195,7 @@ namespace Basil.WebControls
         public void RenderBoostrapV3(HtmlTextWriter writer)
         {
             if (string.IsNullOrEmpty(CssClass)) CssClass = "form-control";
+            if (CssClass != "form-control") CssClass = string.Format("form-control {0}", CssClass);
 
             var cssClass = BasilHelper.GetCssClass(this, BootstrapVersion);
 
