@@ -1,5 +1,4 @@
-﻿using Basil.Controls;
-using Basil.Enums;
+﻿using Basil.Enums;
 using Basil.Validators;
 using System.Configuration;
 
@@ -8,14 +7,6 @@ namespace Basil.Settings
     public class BasilSettings
     {
         #region Properties
-
-        public BasilTextbox Textbox { get; set; }
-
-        public BasilDropDownList DropDownList { get; set; }
-
-        public BasilCheckbox Checkbox { get; set; }
-
-        public BasilRadioButtonList RadioButtonList { get; set; }
 
         public BasilRequiredFieldValidator RequiredFieldValidation { get; set; }
 
@@ -31,29 +22,32 @@ namespace Basil.Settings
 
         public BasilDateValidator DateValidation { get; set; }
 
-        private static BootstrapVersions _bootstrapVersion;
+        private static BootstrapVersions? _bootstrapVersion;
 
         public static BootstrapVersions BootstrapVersion
         {
             get
             {
-                var setting = ConfigurationManager.AppSettings["Basil.Bootstrap.Version"];
-                if (setting != null)
+                if (_bootstrapVersion == null)
                 {
-                    switch (setting)
+                    var setting = ConfigurationManager.AppSettings["Basil.Bootstrap.Version"];
+                    if (setting != null)
                     {
-                        case "2":
-                            _bootstrapVersion = BootstrapVersions.V2;
-                            break;
+                        switch (setting)
+                        {
+                            case "2":
+                                _bootstrapVersion = BootstrapVersions.V2;
+                                break;
 
-                        case "3":
-                            _bootstrapVersion = BootstrapVersions.V3;
-                            break;
+                            case "3":
+                                _bootstrapVersion = BootstrapVersions.V3;
+                                break;
+                        }
                     }
+                    else _bootstrapVersion = BootstrapVersions.V2;
                 }
-                else _bootstrapVersion = BootstrapVersions.V2;
 
-                return _bootstrapVersion;
+                return _bootstrapVersion.GetValueOrDefault(BootstrapVersions.V2);
             }
             set { _bootstrapVersion = value; }
         }
@@ -62,11 +56,6 @@ namespace Basil.Settings
 
         public BasilSettings()
         {
-            Textbox = new BasilTextbox();
-            DropDownList = new BasilDropDownList();
-            Checkbox = new BasilCheckbox();
-            RadioButtonList = new BasilRadioButtonList();
-
             RequiredFieldValidation = new BasilRequiredFieldValidator();
             NumericEntryValidation = new BasilNumericEntryValidator();
             PhoneValidation = new BasilPhoneValidator();

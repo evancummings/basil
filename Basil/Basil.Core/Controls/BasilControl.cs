@@ -1,5 +1,4 @@
 ﻿using Basil.Colors;
-using Basil.Helpers;
 
 namespace Basil.Controls
 {
@@ -23,10 +22,10 @@ namespace Basil.Controls
         {
             InvalidColors = new BasilColorSet(BasilColorSet.ColorState.Invalid);
             ValidColors = new BasilColorSet(BasilColorSet.ColorState.Valid);
-            ErrorCssClass = BootstrapHelper.FormGroupErrorClass;
-            WarningCssClass = BootstrapHelper.FormGroupWarningClass;
-            InfoCssClass = BootstrapHelper.FormGroupInfoClass;
-            SuccessCssClass = BootstrapHelper.FormGroupSuccessClass;
+            //ErrorCssClass = BootstrapHelper.FormGroupErrorClass;
+            //WarningCssClass = BootstrapHelper.FormGroupWarningClass;
+            //InfoCssClass = BootstrapHelper.FormGroupInfoClass;
+            //SuccessCssClass = BootstrapHelper.FormGroupSuccessClass;
         }
     }
 }

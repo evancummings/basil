@@ -90,7 +90,7 @@ namespace Basil.WebControls
         {
             if (RenderControlGroupMarkup)
             {
-                var cssClass = BasilHelper.GetCssClass(this);
+                var cssClass = BasilHelper.GetCssClass(this, BootstrapVersion);
 
                 writer.AddAttribute(HtmlTextWriterAttribute.Class, cssClass);
                 writer.RenderBeginTag(HtmlTextWriterTag.Div);
@@ -131,7 +131,7 @@ namespace Basil.WebControls
 
         public void RenderBoostrapV3(HtmlTextWriter writer)
         {
-            var cssClass = BasilHelper.GetCssClass(this);
+            var cssClass = BasilHelper.GetCssClass(this, BootstrapVersion);
 
             writer.AddAttribute(HtmlTextWriterAttribute.Class, cssClass);
             writer.RenderBeginTag(HtmlTextWriterTag.Div);

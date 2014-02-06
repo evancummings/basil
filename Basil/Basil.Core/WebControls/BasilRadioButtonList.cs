@@ -77,10 +77,12 @@ namespace Basil.WebControls
             switch (BootstrapVersion)
             {
                 case BootstrapVersions.V2:
+                    BasilSettings.BootstrapVersion = BootstrapVersions.V2;
                     RenderBoostrapV2(writer);
                     break;
 
                 case BootstrapVersions.V3:
+                    BasilSettings.BootstrapVersion = BootstrapVersions.V3;
                     RenderBoostrapV3(writer);
                     break;
             }
@@ -90,7 +92,7 @@ namespace Basil.WebControls
         {
             if (RenderControlGroupMarkup)
             {
-                var cssClass = BasilHelper.GetCssClass(this);
+                var cssClass = BasilHelper.GetCssClass(this, BootstrapVersion);
 
                 writer.AddAttribute(HtmlTextWriterAttribute.Class, cssClass);
                 writer.RenderBeginTag(HtmlTextWriterTag.Div);
@@ -132,7 +134,7 @@ namespace Basil.WebControls
 
         public void RenderBoostrapV3(HtmlTextWriter writer)
         {
-            var cssClass = BasilHelper.GetCssClass(this);
+            var cssClass = BasilHelper.GetCssClass(this, BootstrapVersion);
 
             writer.AddAttribute(HtmlTextWriterAttribute.Class, cssClass);
             writer.RenderBeginTag(HtmlTextWriterTag.Div);

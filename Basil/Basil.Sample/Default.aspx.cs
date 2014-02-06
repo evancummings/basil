@@ -20,7 +20,8 @@ namespace Basil.Sample
             List<string> errors2;
 
             var validator = new BasilValidator();
-
+            validator.Validate(pnlForm);
+            validator.Validate(pnlFormTwo);
             validator.Validate(pnlForm, out errors);
             validator.Validate(pnlFormTwo, out errors2);
 

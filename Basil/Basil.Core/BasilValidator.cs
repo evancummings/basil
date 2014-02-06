@@ -59,11 +59,11 @@ namespace Basil
             Errors = new List<string>();
 
             // Validate all BasilTextBox controls
-            var btbControls = ControlHelper.GetControlsOfType<BasilTextBox>(control).Where(x => x.Required).ToList();
-            var bcbControls = ControlHelper.GetControlsOfType<BasilCheckBox>(control).Where(x => x.Required).ToList();
-            var bcblControls = ControlHelper.GetControlsOfType<BasilCheckBoxList>(control).Where(x => x.Required).ToList();
-            var brbControls = ControlHelper.GetControlsOfType<BasilRadioButtonList>(control).Where(x => x.Required).ToList();
-            var bddlControls = ControlHelper.GetControlsOfType<BasilDropDownList>(control).Where(x => x.Required).ToList();
+            var btbControls = BasilControlHelper.GetControlsOfType<BasilTextBox>(control).Where(x => x.Required).ToList();
+            var bcbControls = BasilControlHelper.GetControlsOfType<BasilCheckBox>(control).Where(x => x.Required).ToList();
+            var bcblControls = BasilControlHelper.GetControlsOfType<BasilCheckBoxList>(control).Where(x => x.Required).ToList();
+            var brbControls = BasilControlHelper.GetControlsOfType<BasilRadioButtonList>(control).Where(x => x.Required).ToList();
+            var bddlControls = BasilControlHelper.GetControlsOfType<BasilDropDownList>(control).Where(x => x.Required).ToList();
 
             foreach (var ctrl in btbControls)
             {
