@@ -16,7 +16,9 @@
         <asp:ScriptManager ID="ScriptManager1" runat="server" />
 
         <div class="container">
-            <h3>Basil Test Form (Bootstrap 3)</h3>
+            <div class="row">
+                <h3>Basil Test Form (Bootstrap 3)</h3>
+            </div>
 
             <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                 <ContentTemplate>
@@ -24,45 +26,49 @@
                         Yay, you have a valid form!
                     </asp:Panel>
 
-                    <asp:Panel runat="server" ID="pnlErrors" CssClass="alert alert-error" Visible="false">
+                    <asp:Panel runat="server" ID="pnlErrors" CssClass="alert alert-danger" Visible="false">
                         <asp:Literal runat="server" ID="litErrors" />
                     </asp:Panel>
 
-                    <asp:Panel runat="server" ID="pnlForm" CssClass="row-fluid">
-                        <basil:BasilTextBox runat="server" ID="btbFirstName" Label="First Name" Required="true" ErrorMessage="First name is required" HasFeedback="true" BootstrapVersion="V3" />
+                    <asp:Panel runat="server" ID="pnlForm" CssClass="row">
+                        <div class="col-md-12">
+                            <basil:BasilTextBox runat="server" ID="btbFirstName" Label="First Name" Required="true" ErrorMessage="First name is required" HasFeedback="true" BootstrapVersion="V3" />
 
-                        <basil:BasilTextBox runat="server" ID="btbLastName" Label="Last Name" Required="true" BootstrapVersion="V3" />
+                            <basil:BasilTextBox runat="server" ID="btbLastName" Label="Last Name" Required="true" BootstrapVersion="V3" />
 
-                        <basil:BasilTextBox runat="server" ID="btbEmail" Label="Email Address" Required="true" RequiredType="Email" BootstrapVersion="V3" />
+                            <basil:BasilTextBox runat="server" ID="btbEmail" Label="Email Address" Required="true" RequiredType="Email" BootstrapVersion="V3" />
 
-                        <basil:BasilCheckBox runat="server" ID="bcbIsSomething" Label="Required Checkbox" Required="true" BootstrapVersion="V3" />
+                            <basil:BasilCheckBox runat="server" ID="bcbIsSomething" Label="Required Checkbox" Required="true" BootstrapVersion="V3" />
 
-                        <basil:BasilDropDownList runat="server" ID="bddlItems" Label="DropDownList Items" Required="true" BootstrapVersion="V3">
-                            <asp:ListItem Text="- Select -" Value="" />
-                            <asp:ListItem Text="Item 1" Value="1" />
-                            <asp:ListItem Text="Item 2" Value="2" />
-                            <asp:ListItem Text="Item 3" Value="3" />
-                        </basil:BasilDropDownList>
+                            <basil:BasilDropDownList runat="server" ID="bddlItems" Label="DropDownList Items" Required="true" BootstrapVersion="V3">
+                                <asp:ListItem Text="- Select -" Value="" />
+                                <asp:ListItem Text="Item 1" Value="1" />
+                                <asp:ListItem Text="Item 2" Value="2" />
+                                <asp:ListItem Text="Item 3" Value="3" />
+                            </basil:BasilDropDownList>
 
-                        <basil:BasilRadioButtonList runat="server" ID="brblItems" Label="RadioButtonList Items" Required="true" BootstrapVersion="V3">
-                            <asp:ListItem Text="Item 1" Value="1" />
-                            <asp:ListItem Text="Item 2" Value="2" />
-                            <asp:ListItem Text="Item 3" Value="3" />
-                        </basil:BasilRadioButtonList>
+                            <basil:BasilRadioButtonList runat="server" ID="brblItems" Label="RadioButtonList Items" Required="true" BootstrapVersion="V3">
+                                <asp:ListItem Text="Item 1" Value="1" />
+                                <asp:ListItem Text="Item 2" Value="2" />
+                                <asp:ListItem Text="Item 3" Value="3" />
+                            </basil:BasilRadioButtonList>
 
-                        <basil:BasilCheckBoxList runat="server" ID="bcblItems" Label="CheckBoxList Items" Required="true" BootstrapVersion="V3">
-                            <asp:ListItem Text="Item 1" Value="1" />
-                            <asp:ListItem Text="Item 2" Value="2" />
-                            <asp:ListItem Text="Item 3" Value="3" />
-                        </basil:BasilCheckBoxList>
+                            <basil:BasilCheckBoxList runat="server" ID="bcblItems" Label="CheckBoxList Items" Required="true" BootstrapVersion="V3">
+                                <asp:ListItem Text="Item 1" Value="1" />
+                                <asp:ListItem Text="Item 2" Value="2" />
+                                <asp:ListItem Text="Item 3" Value="3" />
+                            </basil:BasilCheckBoxList>
+                        </div>
                     </asp:Panel>
 
-                    <asp:Panel runat="server" ID="pnlFormTwo" CssClass="row">
-                        <basil:BasilTextBox runat="server" ID="btbGroupTwo" Label="Business Name" Required="true" BootstrapVersion="V3" />
-                    </asp:Panel>
+                    <br />
 
-                    <div class="form-actions">
-                        <asp:Button runat="server" ID="btnSubmit" Text="Submit" CssClass="btn btn-primary" OnClick="btnSubmit_Click" />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="well well-sm">
+                                <asp:Button runat="server" ID="btnSubmit" Text="Submit" CssClass="btn btn-primary" OnClick="btnSubmit_Click" />
+                            </div>
+                        </div>
                     </div>
                 </ContentTemplate>
             </asp:UpdatePanel>

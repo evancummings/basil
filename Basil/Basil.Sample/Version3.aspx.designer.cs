@@ -148,24 +148,6 @@ namespace Basil.Sample {
         protected global::Basil.WebControls.BasilCheckBoxList bcblItems;
         
         /// <summary>
-        /// pnlFormTwo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlFormTwo;
-        
-        /// <summary>
-        /// btbGroupTwo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Basil.WebControls.BasilTextBox btbGroupTwo;
-        
-        /// <summary>
         /// btnSubmit control.
         /// </summary>
         /// <remarks>

@@ -74,7 +74,7 @@ namespace Basil.WebControls
 
         protected override void Render(HtmlTextWriter writer)
         {
-            switch (BasilSettings.BootstrapVersion)
+            switch (BootstrapVersion)
             {
                 case BootstrapVersions.V2:
                     RenderBoostrapV2(writer);
