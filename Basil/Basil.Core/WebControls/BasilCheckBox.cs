@@ -96,9 +96,9 @@ namespace Basil.WebControls
                 writer.RenderBeginTag(HtmlTextWriterTag.Div);
 
                 writer.AddAttribute(HtmlTextWriterAttribute.Class, "controls");
-            }
 
-            writer.RenderBeginTag(HtmlTextWriterTag.Div);
+                writer.RenderBeginTag(HtmlTextWriterTag.Div);
+            }
 
             // Write the checkbox
             writer.AddAttribute(HtmlTextWriterAttribute.Class, "checkbox");
@@ -113,7 +113,7 @@ namespace Basil.WebControls
 
             writer.RenderEndTag();// label
 
-            if (!IsValid && Validator != null)
+            if (!IsValid && Validator != null && !string.IsNullOrEmpty(ErrorMessage))
             {
                 writer.AddAttribute(HtmlTextWriterAttribute.Class, "help-inline");
                 writer.RenderBeginTag(HtmlTextWriterTag.Span);
@@ -121,10 +121,9 @@ namespace Basil.WebControls
                 writer.RenderEndTag();// span help-inline
             }
 
-            writer.RenderEndTag();// div controls
-
             if (RenderControlGroupMarkup)
             {
+                writer.RenderEndTag();// div controls
                 writer.RenderEndTag(); // div control-group
             }
         }
@@ -149,7 +148,7 @@ namespace Basil.WebControls
 
             writer.RenderEndTag();// label
 
-            if (!IsValid && Validator != null)
+            if (!IsValid && Validator != null && !string.IsNullOrEmpty(ErrorMessage))
             {
                 if (HasFeedback)
                 {
