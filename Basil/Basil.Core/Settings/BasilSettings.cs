@@ -36,15 +36,12 @@ namespace Basil.Settings
                         switch (setting)
                         {
                             case "2":
-                                _bootstrapVersion = BootstrapVersions.V2;
-                                break;
+                                return BootstrapVersions.V2;
 
                             case "3":
-                                _bootstrapVersion = BootstrapVersions.V3;
-                                break;
+                                return BootstrapVersions.V3;
                         }
                     }
-                    else _bootstrapVersion = BootstrapVersions.V2;
                 }
 
                 return _bootstrapVersion.GetValueOrDefault(BootstrapVersions.V2);
