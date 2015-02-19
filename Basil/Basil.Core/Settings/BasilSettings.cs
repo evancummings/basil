@@ -22,31 +22,25 @@ namespace Basil.Settings
 
         public BasilDateValidator DateValidation { get; set; }
 
-        private static BootstrapVersions? _bootstrapVersion;
-
         public static BootstrapVersions BootstrapVersion
         {
             get
             {
-                if (_bootstrapVersion == null)
+                var setting = ConfigurationManager.AppSettings["Basil.Bootstrap.Version"];
+                if (setting != null)
                 {
-                    var setting = ConfigurationManager.AppSettings["Basil.Bootstrap.Version"];
-                    if (setting != null)
+                    switch (setting)
                     {
-                        switch (setting)
-                        {
-                            case "2":
-                                return BootstrapVersions.V2;
+                        case "2":
+                            return BootstrapVersions.V2;
 
-                            case "3":
-                                return BootstrapVersions.V3;
-                        }
+                        case "3":
+                            return BootstrapVersions.V3;
                     }
                 }
 
-                return _bootstrapVersion.GetValueOrDefault(BootstrapVersions.V2);
+                return BootstrapVersions.V2;
             }
-            set { _bootstrapVersion = value; }
         }
 
         #endregion Properties

@@ -26,7 +26,10 @@ namespace Basil.WebControls
 
                 return _errorMessage;
             }
-            set { _errorMessage = value; }
+            set
+            {
+                _errorMessage = value;
+            }
         }
 
         public bool Required { get; set; }
@@ -77,12 +80,10 @@ namespace Basil.WebControls
             switch (BootstrapVersion)
             {
                 case BootstrapVersions.V2:
-                    BasilSettings.BootstrapVersion = BootstrapVersions.V2;
                     RenderBoostrapV2(writer);
                     break;
 
                 case BootstrapVersions.V3:
-                    BasilSettings.BootstrapVersion = BootstrapVersions.V3;
                     RenderBoostrapV3(writer);
                     break;
             }

@@ -79,12 +79,12 @@ namespace Basil.WebControls
             switch (BootstrapVersion)
             {
                 case BootstrapVersions.V2:
-                    BasilSettings.BootstrapVersion = BootstrapVersions.V2;
+                    
                     RenderBoostrapV2(writer);
                     break;
 
                 case BootstrapVersions.V3:
-                    BasilSettings.BootstrapVersion = BootstrapVersions.V3;
+                    
                     RenderBoostrapV3(writer);
                     break;
             }

@@ -10,7 +10,7 @@ namespace Basil.Sample
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            BasilSettings.BootstrapVersion = BootstrapVersions.V3;
+            
         }
 
         protected void btnSubmit_Click(object sender, EventArgs e)
