@@ -1,7 +1,5 @@
-﻿using Basil.Enums;
-using Basil.Helpers;
+﻿using Basil.Helpers;
 using Basil.Interfaces;
-using Basil.Settings;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -26,7 +24,10 @@ namespace Basil.WebControls
 
                 return _errorMessage;
             }
-            set { _errorMessage = value; }
+            set
+            {
+                _errorMessage = value;
+            }
         }
 
         public bool Required { get; set; }
@@ -45,8 +46,6 @@ namespace Basil.WebControls
 
         public BasilValidator Validator { get; set; }
 
-        public BootstrapVersions BootstrapVersion { get; set; }
-
         #endregion Properties
 
         public BasilDropDownList()
@@ -54,7 +53,6 @@ namespace Basil.WebControls
             IsValid = true;
             Required = false;
             RenderControlGroupMarkup = true;
-            BootstrapVersion = BasilSettings.BootstrapVersion;
         }
 
         public void Validate(BasilValidator validator = null)
@@ -74,68 +72,15 @@ namespace Basil.WebControls
 
         protected override void Render(HtmlTextWriter writer)
         {
-            switch (BootstrapVersion)
-            {
-                case BootstrapVersions.V2:
-                    BasilSettings.BootstrapVersion = BootstrapVersions.V2;
-                    RenderBoostrapV2(writer);
-                    break;
-
-                case BootstrapVersions.V3:
-                    BasilSettings.BootstrapVersion = BootstrapVersions.V3;
-                    RenderBoostrapV3(writer);
-                    break;
-            }
+            RenderBoostrap(writer);
         }
 
-        public void RenderBoostrapV2(HtmlTextWriter writer)
-        {
-            if (RenderControlGroupMarkup)
-            {
-                var cssClass = BasilHelper.GetCssClass(this, BootstrapVersion);
-
-                writer.AddAttribute(HtmlTextWriterAttribute.Class, cssClass);
-                writer.RenderBeginTag(HtmlTextWriterTag.Div);
-
-                if (!string.IsNullOrEmpty(Label))
-                {
-                    var labelCssClass = (Required) ? "control-label required" : "control-label";
-
-                    writer.AddAttribute(HtmlTextWriterAttribute.Class, labelCssClass);
-                    writer.AddAttribute(HtmlTextWriterAttribute.For, ClientID);
-                    writer.RenderBeginTag(HtmlTextWriterTag.Label);
-                    writer.Write(Label);
-                    writer.RenderEndTag();// label control-label
-                }
-
-                writer.AddAttribute(HtmlTextWriterAttribute.Class, "controls");
-                writer.RenderBeginTag(HtmlTextWriterTag.Div);
-            }
-
-            // Write the textfield
-            base.Render(writer);
-
-            if (!IsValid && Validator != null && !string.IsNullOrEmpty(ErrorMessage))
-            {
-                writer.AddAttribute(HtmlTextWriterAttribute.Class, "help-inline");
-                writer.RenderBeginTag(HtmlTextWriterTag.Span);
-                writer.Write(ErrorMessage);
-                writer.RenderEndTag();// span help-inline
-            }
-
-            if (RenderControlGroupMarkup)
-            {
-                writer.RenderEndTag();// div controls
-                writer.RenderEndTag(); // div control-group
-            }
-        }
-
-        public void RenderBoostrapV3(HtmlTextWriter writer)
+        public void RenderBoostrap(HtmlTextWriter writer)
         {
             if (string.IsNullOrEmpty(CssClass)) CssClass = "form-control";
             if (CssClass != "form-control") CssClass = string.Format("form-control {0}", CssClass);
 
-            var cssClass = BasilHelper.GetCssClass(this, BootstrapVersion);
+            var cssClass = BasilHelper.GetCssClass(this);
 
             writer.AddAttribute(HtmlTextWriterAttribute.Class, cssClass);
             writer.RenderBeginTag(HtmlTextWriterTag.Div);

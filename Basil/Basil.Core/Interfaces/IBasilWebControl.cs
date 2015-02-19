@@ -1,5 +1,4 @@
-﻿using Basil.Enums;
-using System.Web.UI;
+﻿using System.Web.UI;
 
 namespace Basil.Interfaces
 {
@@ -23,10 +22,6 @@ namespace Basil.Interfaces
 
         BasilValidator Validator { get; set; }
 
-        BootstrapVersions BootstrapVersion { get; set; }
-
-        void RenderBoostrapV2(HtmlTextWriter writer);
-
-        void RenderBoostrapV3(HtmlTextWriter writer);
+        void RenderBoostrap(HtmlTextWriter writer);
     }
 }

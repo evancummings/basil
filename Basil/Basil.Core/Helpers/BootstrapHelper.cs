@@ -1,62 +1,29 @@
-﻿using Basil.Enums;
-using System.Linq;
-
-namespace Basil.Helpers
+﻿namespace Basil.Helpers
 {
     public static class BootstrapHelper
     {
-        public static string GetFormGroupClass(BootstrapVersions bsVersion)
+        public static string GetFormGroupClass()
         {
-            switch (bsVersion)
-            {
-                case BootstrapVersions.V2:
-                    return "control-group";
-            }
-
             return "form-group";
         }
 
-        public static string GetFormGroupErrorClass(BootstrapVersions bsVersion)
+        public static string GetFormGroupErrorClass()
         {
-            switch (bsVersion)
-            {
-                case BootstrapVersions.V2:
-                    return "error";
-            }
-
             return "has-error";
         }
 
-        public static string GetFormGroupWarningClass(BootstrapVersions bsVersion)
+        public static string GetFormGroupWarningClass()
         {
-            switch (bsVersion)
-            {
-                case BootstrapVersions.V2:
-                    return "warning";
-            }
-
             return "has-warning";
         }
 
-        public static string GetFormGroupInfoClass(BootstrapVersions bsVersion)
+        public static string GetFormGroupInfoClass()
         {
-            switch (bsVersion)
-            {
-                case BootstrapVersions.V2:
-                    return "info";
-            }
-
             return "has-info";
         }
 
-        public static string GetFormGroupSuccessClass(BootstrapVersions bsVersion)
+        public static string GetFormGroupSuccessClass()
         {
-            switch (bsVersion)
-            {
-                case BootstrapVersions.V2:
-                    return "success";
-            }
-
             return "has-success";
         }
     }

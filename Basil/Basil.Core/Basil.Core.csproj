@@ -46,7 +46,6 @@
   <ItemGroup>
     <Compile Include="BasilValidator.cs" />
     <Compile Include="Colors\ColorSet.cs" />
-    <Compile Include="Enums\BootstrapVersions.cs" />
     <Compile Include="Helpers\BasilHelper.cs" />
     <Compile Include="Helpers\BootstrapHelper.cs" />
     <Compile Include="Helpers\BasilControlHelper.cs" />
