@@ -23,7 +23,7 @@ namespace Basil.Interfaces
 
         BasilValidator Validator { get; set; }
 
-        BootstrapVersions BootstrapVersion { get; set; }
+        BootstrapVersions? BootstrapVersion { get; set; }
 
         void RenderBoostrapV2(HtmlTextWriter writer);
 

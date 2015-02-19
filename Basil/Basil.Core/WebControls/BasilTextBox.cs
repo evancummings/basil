@@ -56,7 +56,10 @@ namespace Basil.WebControls
 
                 return _errorMessage;
             }
-            set { _errorMessage = value; }
+            set
+            {
+                _errorMessage = value;
+            }
         }
 
         public RequiredTypes RequiredType { get; set; }
@@ -77,7 +80,7 @@ namespace Basil.WebControls
 
         public BasilValidator Validator { get; set; }
 
-        public BootstrapVersions BootstrapVersion { get; set; }
+        public BootstrapVersions? BootstrapVersion { get; set; }
 
         #endregion Properties
 
@@ -87,7 +90,7 @@ namespace Basil.WebControls
             Required = false;
             RequiredType = RequiredTypes.Text;
             RenderControlGroupMarkup = true;
-            BootstrapVersion = BasilSettings.BootstrapVersion;
+            if (BootstrapVersion == null) BootstrapVersion = BasilSettings.BootstrapVersion;
         }
 
         public void Validate(BasilValidator validator = null)

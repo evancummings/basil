@@ -48,7 +48,7 @@ namespace Basil.WebControls
 
         public BasilValidator Validator { get; set; }
 
-        public BootstrapVersions BootstrapVersion { get; set; }
+        public BootstrapVersions? BootstrapVersion { get; set; }
 
         #endregion Properties
 
@@ -57,7 +57,7 @@ namespace Basil.WebControls
             IsValid = true;
             Required = false;
             RenderControlGroupMarkup = true;
-            BootstrapVersion = BasilSettings.BootstrapVersion;
+            if (BootstrapVersion == null) BootstrapVersion = BasilSettings.BootstrapVersion;
         }
 
         public void Validate(BasilValidator validator = null)

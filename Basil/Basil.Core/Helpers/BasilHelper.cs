@@ -1,12 +1,11 @@
 ﻿using Basil.Enums;
 using Basil.Interfaces;
-using System.Linq;
 
 namespace Basil.Helpers
 {
     public static class BasilHelper
     {
-        public static string GetCssClass(IBasilWebControl control, BootstrapVersions bsVersion)
+        public static string GetCssClass(IBasilWebControl control, BootstrapVersions? bsVersion)
         {
             var feedback = control.HasFeedback ? " has-feedback" : string.Empty;
             var cssClass = BootstrapHelper.GetFormGroupClass(bsVersion);
