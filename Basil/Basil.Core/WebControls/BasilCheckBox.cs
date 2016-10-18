@@ -138,8 +138,10 @@ namespace Basil.WebControls
             writer.AddAttribute(HtmlTextWriterAttribute.Class, cssClass);
             writer.RenderBeginTag(HtmlTextWriterTag.Div);
 
-            // Write the checkbox
             writer.AddAttribute(HtmlTextWriterAttribute.Class, "checkbox");
+            writer.RenderBeginTag(HtmlTextWriterTag.Div);
+
+            // Write the checkbox
             writer.RenderBeginTag(HtmlTextWriterTag.Label);
 
             base.Render(writer);
@@ -150,6 +152,7 @@ namespace Basil.WebControls
             }
 
             writer.RenderEndTag();// label
+            writer.RenderEndTag();// div
 
             if (!IsValid && Validator != null && !string.IsNullOrEmpty(ErrorMessage))
             {
