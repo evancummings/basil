@@ -15,6 +15,8 @@ namespace Basil.WebControls
 
         public string Label { get; set; }
 
+        public string HelpText { get; set; }
+
         private string _errorMessage;
 
         public string ErrorMessage
@@ -156,6 +158,14 @@ namespace Basil.WebControls
                 writer.RenderEndTag();// label control-label
             }
 
+            if (!string.IsNullOrEmpty(HelpText))
+            {
+                writer.AddAttribute(HtmlTextWriterAttribute.Class, "help-block");
+                writer.RenderBeginTag(HtmlTextWriterTag.P);
+                writer.Write(HelpText);
+                writer.RenderEndTag();// p help-block
+            }
+
             // Write the textfield
             base.Render(writer);
 
@@ -190,6 +200,7 @@ namespace Basil.WebControls
             if (Items[repeatIndex].Selected) writer.AddAttribute(HtmlTextWriterAttribute.Checked, "checked");
 
             var attrs = Items[repeatIndex].Attributes;
+
             foreach (string key in attrs.Keys)
             {
                 writer.AddAttribute(key, attrs[key]);

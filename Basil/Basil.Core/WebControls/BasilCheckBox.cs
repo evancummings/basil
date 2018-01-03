@@ -13,6 +13,8 @@ namespace Basil.WebControls
 
         public string Label { get; set; }
 
+        public string HelpText { get; set; }
+
         private string _errorMessage;
 
         public string ErrorMessage
@@ -152,6 +154,15 @@ namespace Basil.WebControls
             }
 
             writer.RenderEndTag();// label
+
+            if (!string.IsNullOrEmpty(HelpText))
+            {
+                writer.AddAttribute(HtmlTextWriterAttribute.Class, "help-block");
+                writer.RenderBeginTag(HtmlTextWriterTag.P);
+                writer.Write(HelpText);
+                writer.RenderEndTag();// p help-block
+            }
+
             writer.RenderEndTag();// div
 
             if (!IsValid && Validator != null && !string.IsNullOrEmpty(ErrorMessage))

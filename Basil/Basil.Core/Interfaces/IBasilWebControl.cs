@@ -7,6 +7,8 @@ namespace Basil.Interfaces
     {
         string Label { get; set; }
 
+        string HelpText { get; set; }
+
         bool Required { get; set; }
 
         bool IsValid { get; set; }

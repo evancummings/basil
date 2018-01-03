@@ -1,6 +1,8 @@
 ﻿using Basil.Enums;
 using Basil.Validators;
 using System.Configuration;
+using System.Linq;
+using System.Web;
 
 namespace Basil.Settings
 {
@@ -42,6 +44,8 @@ namespace Basil.Settings
                 return BootstrapVersions.V2;
             }
         }
+
+        public static bool IsPdfContext => (HttpContext.Current != null && HttpContext.Current.Request.Headers.AllKeys.Contains("EOPDF"));
 
         #endregion Properties
 
