@@ -8,8 +8,8 @@
     <link href="/Content/bootstrap3/bootstrap.min.css" rel="stylesheet" />
     <link href="/Content/Site.css" rel="stylesheet" />
 
-    <script src="/Scripts/jquery-3.1.1.min.js"></script>
-    <script src="/Scripts/bootstrap3/bootstrap.min.js"></script>
+    <script src="/Scripts/jquery-3.2.1.min.js"></script>
+    <script src="/Scripts/bootstrap.min.js"></script>
 </head>
 <body>
     <form id="form1" runat="server">
